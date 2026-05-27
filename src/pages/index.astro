@@ -1,0 +1,133 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Section from "@/components/Section.astro";
+import ServiceCard from "@/components/ServiceCard.astro";
+import FormuleCard from "@/components/FormuleCard.astro";
+import ContactForm from "@/components/ContactForm.astro";
+import { site } from "@/data/site";
+
+const prestations = [
+  {
+    icon: "/images/conseil-1.png",
+    iconAlt: "Accompagnement stratégique",
+    text: "Accompagnement stratégique dans vos démarches de communication institutionnelle, commerciale & interne.",
+  },
+  {
+    icon: "/images/creation-1.png",
+    iconAlt: "Création de supports",
+    text: "Conception graphique et suivi de fabrication de l'ensemble de vos supports de communication print & web.",
+  },
+  {
+    icon: "/images/formation-1.png",
+    iconAlt: "Formation PAO",
+    text: "Chaîne graphique — Initiation et perfectionnement sur les logiciels Photoshop, Illustrator, InDesign — Stratégie de communication.",
+  },
+];
+
+const services = [
+  {
+    icon: "/images/picto_strategie.png",
+    title: "Conseil stratégique",
+    text: "Études — Positionnements — Axes stratégiques — Plans de communication",
+  },
+  {
+    icon: "/images/picto_identite_visuelle.png",
+    title: "Identité visuelle",
+    text: "Logotypes — Chartes graphiques — Kits de communication entrepreneur",
+  },
+  {
+    icon: "/images/picto_site_internet.png",
+    title: "Création de sites",
+    text: "Sites web vitrine — Optimisation SEO — Stratégie SEA — Rédaction",
+  },
+  {
+    icon: "/images/picto_signaletique.png",
+    title: "Signalétique",
+    text: "Création de signalétiques intérieures et extérieures",
+  },
+  {
+    icon: "/images/picto_edition.png",
+    title: "Édition & publicité",
+    text: "Journaux internes — Notes d'information — Rapports annuels — Catalogues — Annonces presse — Affichage",
+  },
+  {
+    icon: "/images/picto_evenementiel.png",
+    title: "Événementiel",
+    text: "Organisation d'événements internes et externes (anniversaires d'entreprise — marketing — salons)",
+  },
+];
+---
+
+<BaseLayout
+  title="Emy Communication à Orléans — Agence Cré'active"
+  description="Une petite agence qui a de grandes ambitions pour ses clients. Emy propose un accompagnement global Print & Web en Centre-Val de Loire & Île-de-France."
+>
+  <!-- HERO -->
+  <section class="relative overflow-hidden">
+    <div class="container-x py-20 md:py-28 lg:py-32 text-center">
+      <p class="title-eyebrow">Emy Communication</p>
+      <h1 class="mt-3 font-display uppercase tracking-[0.06em] text-4xl md:text-6xl lg:text-7xl leading-[1.05]" style="font-family:var(--font-display)">
+        Agence<br /><span class="text-[color:var(--color-brand)]">Cré'active</span>
+      </h1>
+      <p class="mt-6 max-w-2xl mx-auto text-lg text-[color:var(--color-ink-muted)] leading-relaxed">
+        {site.tagline}
+      </p>
+      <div class="mt-8 flex flex-wrap items-center justify-center gap-3">
+        <a href="/emy" class="btn-primary hover:bg-[color:var(--color-brand-dark)]">En savoir plus</a>
+        <a
+          href="/realisations"
+          class="inline-block px-6 py-[0.85rem] text-sm font-semibold uppercase tracking-[0.08em] border border-[color:var(--color-brand)] text-[color:var(--color-brand)] rounded-sm hover:bg-[color:var(--color-brand)] hover:text-white transition-colors"
+          style="font-family:var(--font-display)"
+        >
+          Mes réalisations
+        </a>
+      </div>
+    </div>
+    <div class="h-px bg-gradient-to-r from-transparent via-[color:var(--color-line)] to-transparent"></div>
+  </section>
+
+  <!-- PRESTATIONS -->
+  <Section
+    eyebrow="Prestations"
+    title="Une démarche cré'active"
+    intro="Une petite agence qui a de grandes ambitions pour ses clients. Emy propose un accompagnement global en Centre-Val de Loire & Île-de-France depuis 2015."
+  >
+    <div class="grid md:grid-cols-3 gap-12 mt-4">
+      {prestations.map((p) => <ServiceCard {...p} />)}
+    </div>
+  </Section>
+
+  <!-- SERVICES -->
+  <Section
+    bg="soft"
+    eyebrow="Services"
+    title="Une palette sur-mesure"
+    intro="Une palette de services sur-mesure pour répondre à l'ensemble de vos problématiques de communication."
+  >
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-y-12 gap-x-6">
+      {services.map((s) => <ServiceCard {...s} />)}
+    </div>
+  </Section>
+
+  <!-- SOLUTIONS D'ACCOMPAGNEMENT -->
+  <Section
+    eyebrow="Solutions d'accompagnement"
+    title="Au projet ou en régie"
+    intro="En fonction du besoin de communication, deux formules d'accompagnement sont possibles. Dans les deux cas, cela commence toujours par un premier rendez-vous (physique ou visio), en fonction de vos disponibilités."
+  >
+    <div class="grid md:grid-cols-2 gap-8 mt-4">
+      <FormuleCard
+        icon="/images/forfait.png"
+        title="Au projet"
+        text="Vous avez un projet de communication précis et vous souhaitez être accompagné ponctuellement sur la mise en place d'une opération ou sur la création d'un ou plusieurs supports de communication."
+      />
+      <FormuleCard
+        icon="/images/regie.png"
+        title="En régie"
+        text="Vous avez besoin d'un accompagnement sur le long terme pour élaborer une stratégie de communication et la mettre en place sur plusieurs mois, avec une présence sur place possible en fonction des étapes."
+      />
+    </div>
+  </Section>
+
+  <ContactForm />
+</BaseLayout>

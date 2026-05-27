@@ -1,0 +1,33 @@
+---
+import { categories } from "@/data/realisations";
+import Picture from "@/components/Picture.astro";
+---
+
+<ul class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
+  {categories.map((cat) => (
+    <li>
+      <a
+        href={cat.href}
+        class="group block relative overflow-hidden aspect-square bg-[color:var(--color-line-soft)] focus:outline-none"
+        aria-label={`Voir les réalisations : ${cat.title}`}
+      >
+        <Picture
+          src={cat.thumb}
+          alt={cat.thumbAlt}
+          width={400}
+          height={400}
+          class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+        />
+        <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent opacity-90 group-hover:from-[color:var(--color-brand)]/85 transition-colors"></div>
+        <div class="absolute inset-x-0 bottom-0 p-4 md:p-5 text-white">
+          <p class="text-[10px] md:text-xs uppercase tracking-[0.12em] opacity-90" style="font-family:var(--font-display)">
+            {cat.eyebrow}
+          </p>
+          <p class="mt-1 text-sm md:text-base font-semibold uppercase tracking-[0.04em]" style="font-family:var(--font-display)">
+            {cat.title}
+          </p>
+        </div>
+      </a>
+    </li>
+  ))}
+</ul>

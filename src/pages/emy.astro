@@ -1,0 +1,72 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Section from "@/components/Section.astro";
+import CategoryGrid from "@/components/CategoryGrid.astro";
+import ContactForm from "@/components/ContactForm.astro";
+import TealBand from "@/components/TealBand.astro";
+---
+
+<BaseLayout
+  title="Emy — Agence de communication cré'active"
+  description="Découvrez Emy : parcours, vision et démarche d'une agence de communication à taille humaine, créative et engagée, à Orléans."
+>
+  <section class="container-x py-16 md:py-24">
+    <p class="title-eyebrow text-center">À propos</p>
+    <h1 class="title-section text-center mt-3 !text-3xl md:!text-4xl max-w-3xl mx-auto">
+      Accompagner les entreprises dans leurs ambitions de communication
+    </h1>
+
+    <div class="mt-12 max-w-3xl mx-auto space-y-5 text-[color:var(--color-ink-muted)] leading-relaxed text-lg">
+      <p>
+        En 2015, après de belles expériences professionnelles comme salariée en entreprises
+        privées, une profonde envie de me lancer dans le monde de l'entreprenariat se faisait
+        sentir pour accompagner les entreprises dans leurs ambitions de communication.
+      </p>
+      <p>
+        Un premier contrat, puis deux, puis trois, et c'est le début d'une belle aventure qui
+        me permet aujourd'hui d'accompagner les dirigeants d'entreprises sur la mise en place
+        de stratégies & d'opérations de communication ou sur la création plus ponctuelle de
+        supports de communication print et web.
+      </p>
+      <p>
+        Mon approche professionnelle est basée sur la compréhension profonde des
+        problématiques de communication en évolution permanente, ainsi que sur une solide
+        relation de confiance que j'aime construire avec les clients que j'accompagne.
+      </p>
+      <p>
+        Issue d'une formation initiale en Communication d'Entreprise, je me suis spécialisée
+        au fil des années dans le graphisme, puis dans le digital, ce qui me permet une
+        approche très globale dans la compréhension des problématiques de communication, puis
+        dans la conception graphique des supports adaptés.
+      </p>
+      <p>
+        Ma vision s'est également affinée grâce à la formation d'étudiants en communication
+        par apprentissage (gestion de projet & maîtrise des logiciels PAO). Cela m'a permis
+        de découvrir des problématiques de communication d'entreprises très diverses dans
+        l'accompagnement de leurs projets.
+      </p>
+      <p>
+        C'est mon parcours dans son ensemble qui me donne aujourd'hui la passion de poursuivre
+        dans cet univers aux multiples facettes, avec sensibilité, créativité, réactivité et
+        détermination.
+      </p>
+    </div>
+  </section>
+
+  <TealBand
+    title="Un projet de communication ?"
+    text="Échangeons ensemble sur vos enjeux et trouvons la formule qui vous correspond."
+    ctaLabel="Me contacter"
+    ctaHref="/contact"
+  />
+
+  <Section
+    eyebrow="Quelques réalisations"
+    title="Print & web en action"
+    intro="Découvrez quelques-unes de mes réalisations Print et Web dans différents domaines d'activité."
+  >
+    <CategoryGrid />
+  </Section>
+
+  <ContactForm />
+</BaseLayout>

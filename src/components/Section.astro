@@ -1,0 +1,43 @@
+---
+interface Props {
+  eyebrow?: string;
+  title?: string;
+  intro?: string;
+  align?: "center" | "left";
+  bg?: "white" | "soft" | "brand";
+  id?: string;
+  narrow?: boolean;
+}
+const { eyebrow, title, intro, align = "center", bg = "white", id, narrow = false } = Astro.props;
+
+const bgClass =
+  bg === "brand"
+    ? "bg-[color:var(--color-brand)] text-white"
+    : bg === "soft"
+    ? "bg-[color:var(--color-line-soft)]"
+    : "bg-white";
+---
+
+<section id={id} class:list={["section-y", bgClass]}>
+  <div class:list={[narrow ? "container-narrow" : "container-x"]}>
+    {(eyebrow || title || intro) && (
+      <header class:list={["mb-12", align === "center" ? "text-center mx-auto max-w-3xl" : ""]}>
+        {eyebrow && (
+          <p class:list={["title-eyebrow", bg === "brand" && "!text-white/90"]}>{eyebrow}</p>
+        )}
+        {title && (
+          <h2 class:list={["title-section mt-2", bg === "brand" && "!text-white"]}>{title}</h2>
+        )}
+        {intro && (
+          <p class:list={[
+            "mt-5 text-base md:text-lg leading-relaxed",
+            bg === "brand" ? "text-white/90" : "text-[color:var(--color-ink-muted)]"
+          ]}>
+            {intro}
+          </p>
+        )}
+      </header>
+    )}
+    <slot />
+  </div>
+</section>

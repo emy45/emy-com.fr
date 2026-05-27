@@ -1,0 +1,26 @@
+---
+import Picture from "@/components/Picture.astro";
+interface Props {
+  icon: string;
+  iconAlt: string;
+  title?: string;
+  text: string;
+}
+const { icon, iconAlt, title, text } = Astro.props;
+---
+
+<article class="flex flex-col items-center text-center px-2">
+  <Picture
+    src={icon}
+    alt={iconAlt}
+    width={120}
+    height={120}
+    class="h-24 w-auto mb-5"
+  />
+  {title && (
+    <h3 class="font-display uppercase tracking-[0.06em] text-base font-semibold mb-2" style="font-family:var(--font-display)">
+      {title}
+    </h3>
+  )}
+  <p class="text-[color:var(--color-ink-muted)] leading-relaxed max-w-xs">{text}</p>
+</article>

@@ -1,0 +1,39 @@
+---
+interface Props {
+  src: string;
+  alt: string;
+  width?: number | string;
+  height?: number | string;
+  loading?: "lazy" | "eager";
+  decoding?: "async" | "sync" | "auto";
+  fetchpriority?: "high" | "low" | "auto";
+  class?: string;
+  sizes?: string;
+}
+const {
+  src,
+  alt,
+  width,
+  height,
+  loading = "lazy",
+  decoding = "async",
+  fetchpriority,
+  class: className,
+  sizes,
+} = Astro.props;
+
+// Always serve the .webp build artefact; source PNG/JPG remain only at dev.
+const finalSrc = src.replace(/\.(png|jpe?g)$/i, ".webp");
+---
+
+<img
+  src={finalSrc}
+  alt={alt}
+  width={width}
+  height={height}
+  loading={loading}
+  decoding={decoding}
+  fetchpriority={fetchpriority}
+  class={className}
+  sizes={sizes}
+/>

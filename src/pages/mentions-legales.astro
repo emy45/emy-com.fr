@@ -1,0 +1,72 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { site } from "@/data/site";
+---
+
+<BaseLayout
+  title="Mentions légales"
+  description="Mentions légales du site emy-com.fr — Emilie Richard Langlois, agence de communication à Orléans."
+  noindex={true}
+>
+  <article class="container-narrow py-16 md:py-20">
+    <h1 class="title-section mb-10">Mentions légales</h1>
+
+    <section class="mb-10">
+      <h2 class="font-display uppercase tracking-[0.06em] text-lg mb-3 text-[color:var(--color-brand)]" style="font-family:var(--font-display)">
+        Informations légales
+      </h2>
+      <p class="text-[color:var(--color-ink-muted)] leading-relaxed">
+        emy-com.fr est le site officiel de l'entreprise individuelle Emilie Richard Langlois.
+      </p>
+      <ul class="mt-4 space-y-1 text-[color:var(--color-ink-muted)]">
+        <li>Adresse du Siège : {site.address.street} – {site.address.zip} {site.address.city.toUpperCase()}</li>
+        <li>Tél. : {site.phone}</li>
+        <li>Courriel : <a href={`mailto:${site.email}`} class="text-[color:var(--color-brand)] hover:underline">{site.email}</a></li>
+        <li>Directeur de la publication : Emilie Langlois</li>
+      </ul>
+    </section>
+
+    <section class="mb-10">
+      <h2 class="font-display uppercase tracking-[0.06em] text-lg mb-3 text-[color:var(--color-brand)]" style="font-family:var(--font-display)">
+        Protection de la vie privée
+      </h2>
+      <p class="text-[color:var(--color-ink-muted)] leading-relaxed">
+        Les cookies de ce site sont utilisés par le système de statistique Google Analytics
+        et par le système de gestion de contenu du site. Aucune information nominative n'est
+        enregistrée.
+      </p>
+      <p class="mt-4 text-[color:var(--color-ink-muted)] leading-relaxed">
+        En utilisant votre logiciel de messagerie, vous nous communiquez votre adresse
+        électronique. Vous pouvez demander à tout moment, par simple courrier électronique ou
+        par lettre, de ne plus figurer dans nos fichiers de contacts. Conformément à la loi
+        Informatique et libertés du 6 janvier 1978, vous disposez d'un droit d'accès, de
+        modification, de rectification et de suppression des données vous concernant.
+      </p>
+    </section>
+
+    <section class="mb-10">
+      <h2 class="font-display uppercase tracking-[0.06em] text-lg mb-3 text-[color:var(--color-brand)]" style="font-family:var(--font-display)">
+        Droits d'utilisation et de reproduction
+      </h2>
+      <p class="text-[color:var(--color-ink-muted)] leading-relaxed">
+        Le droit de reproduction et/ou droit de représentation des données du site Emy est
+        exclusivement destiné à l'usage privé et/ou aux seules fins de consultation
+        personnelle et privée des utilisateurs du réseau Internet. Toute autre utilisation
+        est strictement interdite et susceptible de poursuites conformément aux dispositions
+        du Code de la Propriété Intellectuelle français, des règlements nationaux et des
+        conventions internationales en vigueur.
+      </p>
+    </section>
+
+    <section>
+      <h2 class="font-display uppercase tracking-[0.06em] text-lg mb-3 text-[color:var(--color-brand)]" style="font-family:var(--font-display)">
+        Droit applicable
+      </h2>
+      <p class="text-[color:var(--color-ink-muted)] leading-relaxed">
+        De convention expresse entre les parties, le droit applicable aux présentes et à
+        leurs conséquences est exclusivement le Droit Français, tant en ce qui concerne les
+        règles de procédure que celles du fond.
+      </p>
+    </section>
+  </article>
+</BaseLayout>

@@ -1,0 +1,49 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import CaseStudy from "@/components/CaseStudy.astro";
+import ContactForm from "@/components/ContactForm.astro";
+import { cases, categories } from "@/data/realisations";
+
+interface Props {
+  slug: string;
+  title?: string;
+  eyebrow?: string;
+  intro?: string;
+  pageTitle?: string;
+  description?: string;
+}
+
+const { slug, title, eyebrow = "Stratégie & création", intro, pageTitle, description } =
+  Astro.props;
+
+const category = categories.find((c) => c.slug === slug);
+const list = cases[slug] ?? [];
+const resolvedTitle = title ?? category?.title ?? slug;
+const resolvedPageTitle = pageTitle ?? `${resolvedTitle} — Réalisations`;
+const resolvedDescription =
+  description ??
+  `Découvrez les réalisations Emy Communication dans la catégorie ${resolvedTitle.toLowerCase()} : projets sur-mesure pour des marques en Centre-Val de Loire et Île-de-France.`;
+---
+
+<BaseLayout title={resolvedPageTitle} description={resolvedDescription}>
+  <section class="container-x py-14 md:py-20 text-center">
+    <p class="title-eyebrow">{eyebrow}</p>
+    <h1 class="title-section mt-3 !text-3xl md:!text-4xl">{resolvedTitle}</h1>
+    {intro && (
+      <p class="mt-5 max-w-2xl mx-auto text-[color:var(--color-ink-muted)] text-lg">
+        {intro}
+      </p>
+    )}
+  </section>
+
+  <section class="container-x pb-10">
+    {list.length === 0 && (
+      <p class="text-center text-[color:var(--color-ink-muted)] py-12">
+        Études de cas en cours de mise en ligne.
+      </p>
+    )}
+    {list.map((c) => <CaseStudy data={c} />)}
+  </section>
+
+  <ContactForm />
+</BaseLayout>

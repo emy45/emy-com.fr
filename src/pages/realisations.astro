@@ -1,0 +1,29 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Section from "@/components/Section.astro";
+import CategoryGrid from "@/components/CategoryGrid.astro";
+import ContactForm from "@/components/ContactForm.astro";
+---
+
+<BaseLayout
+  title="Mes réalisations — Agence de communication cré'active"
+  description="Découvrez quelques-unes de mes réalisations Print et Web dans différents domaines d'activité : chartes, affichage, plaquettes, sites web, signalétique, édition, objets publicitaires."
+>
+  <section class="container-x py-16 md:py-20 text-center">
+    <p class="title-eyebrow">Portfolio</p>
+    <h1 class="title-section mt-3 !text-3xl md:!text-4xl">Quelques réalisations</h1>
+    <p class="mt-5 max-w-2xl mx-auto text-[color:var(--color-ink-muted)] text-lg">
+      Découvrez quelques-unes de mes réalisations Print et Web dans différents domaines
+      d'activité.
+    </p>
+  </section>
+
+  <section class="container-x pb-20">
+    <CategoryGrid />
+  </section>
+
+  <ContactForm
+    title="Vous avez un projet ?"
+    intro="Contactez-moi via ce formulaire, je vous répondrai sans délai pour étudier votre projet."
+  />
+</BaseLayout>

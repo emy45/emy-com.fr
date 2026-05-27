@@ -1,0 +1,118 @@
+@import "tailwindcss";
+
+@theme {
+  --color-brand: #00a9b8;
+  --color-brand-dark: #008a96;
+  --color-brand-light: #e5f7f9;
+  --color-accent: #2ea3f2;
+  --color-ink: #313131;
+  --color-ink-muted: #666666;
+  --color-line: #e5e5e5;
+  --color-line-soft: #f3f3f3;
+
+  --font-sans: "Open Sans", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-display: "Montserrat", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+
+  --tracking-display: 0.08em;
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    text-rendering: optimizeLegibility;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    color: var(--color-ink);
+    background: #fff;
+    font-size: 16px;
+    line-height: 1.65;
+    font-weight: 400;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display);
+    color: var(--color-ink);
+    line-height: 1.2;
+    font-weight: 700;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+
+  img, picture, svg, video {
+    display: block;
+    max-width: 100%;
+    height: auto;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-brand);
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+}
+
+@utility container-x {
+  width: 100%;
+  max-width: 1200px;
+  margin-inline: auto;
+  padding-inline: 1.25rem;
+}
+
+@utility container-narrow {
+  width: 100%;
+  max-width: 880px;
+  margin-inline: auto;
+  padding-inline: 1.25rem;
+}
+
+@utility section-y {
+  padding-block: 4.5rem;
+}
+
+@utility title-eyebrow {
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-display);
+  font-weight: 700;
+  font-size: 0.85rem;
+  color: var(--color-brand);
+}
+
+@utility title-section {
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-display);
+  font-weight: 700;
+  font-size: clamp(1.5rem, 1.2rem + 1.2vw, 2.1rem);
+  color: var(--color-ink);
+}
+
+@utility btn-primary {
+  display: inline-block;
+  background: var(--color-brand);
+  color: #fff;
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-display);
+  font-weight: 600;
+  font-size: 0.9rem;
+  padding: 0.85rem 1.6rem;
+  border-radius: 2px;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+@utility btn-primary-hover {
+  background: var(--color-brand-dark);
+}
+
+/* Smooth img loading without layout shift */
+img[loading="lazy"] {
+  background: var(--color-line-soft);
+}

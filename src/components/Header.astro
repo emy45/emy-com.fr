@@ -1,0 +1,127 @@
+---
+import { nav, site } from "@/data/site";
+
+const path = Astro.url.pathname.replace(/\/$/, "") || "/";
+function isActive(href: string) {
+  if (href === "/") return path === "/";
+  return path === href || path.startsWith(href + "/");
+}
+---
+
+<header class="sticky top-0 z-40 bg-white/95 backdrop-blur border-b border-[color:var(--color-line)]">
+  <div class="container-x flex items-center justify-between gap-6 py-3 md:py-4">
+    <a href="/" class="flex items-center gap-2 shrink-0" aria-label={site.siteName}>
+      <img
+        src="/images/logo_emy.png"
+        alt={site.siteName}
+        width="150"
+        height="60"
+        decoding="async"
+        fetchpriority="high"
+        class="h-10 md:h-12 w-auto"
+      />
+    </a>
+
+    <nav class="hidden lg:block" aria-label="Navigation principale">
+      <ul class="flex items-center gap-7 text-[0.95rem] font-medium uppercase tracking-[0.05em]" style="font-family:var(--font-display)">
+        {nav.map((item) => (
+          <li class="relative group">
+            {item.children ? (
+              <>
+                <a
+                  href={item.href}
+                  class:list={[
+                    "flex items-center gap-1 py-2 hover:text-[color:var(--color-brand)] transition-colors",
+                    isActive(item.href) && "text-[color:var(--color-brand)]",
+                  ]}
+                  aria-haspopup="true"
+                >
+                  {item.label}
+                  <svg width="10" height="6" viewBox="0 0 10 6" aria-hidden="true">
+                    <path d="M1 1l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </a>
+                <div class="absolute left-0 top-full hidden group-hover:block group-focus-within:block pt-2">
+                  <ul class="bg-white border border-[color:var(--color-line)] shadow-lg min-w-[240px] py-2 normal-case tracking-normal" style="font-family:var(--font-sans)">
+                    {item.children.map((child) => (
+                      <li>
+                        <a
+                          href={child.href}
+                          class:list={[
+                            "block px-4 py-2 text-sm hover:bg-[color:var(--color-line-soft)] hover:text-[color:var(--color-brand)] transition-colors",
+                            isActive(child.href) && "text-[color:var(--color-brand)]",
+                          ]}
+                        >
+                          {child.label}
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </>
+            ) : (
+              <a
+                href={item.href}
+                class:list={[
+                  "block py-2 hover:text-[color:var(--color-brand)] transition-colors",
+                  isActive(item.href) && "text-[color:var(--color-brand)]",
+                ]}
+              >
+                {item.label}
+              </a>
+            )}
+          </li>
+        ))}
+      </ul>
+    </nav>
+
+    <details class="lg:hidden relative" id="mobile-menu">
+      <summary class="list-none cursor-pointer p-2 -mr-2" aria-label="Ouvrir le menu">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="3" y1="6" x2="21" y2="6"></line>
+          <line x1="3" y1="12" x2="21" y2="12"></line>
+          <line x1="3" y1="18" x2="21" y2="18"></line>
+        </svg>
+      </summary>
+      <nav class="absolute right-0 top-full mt-2 w-72 bg-white border border-[color:var(--color-line)] shadow-xl py-2" aria-label="Navigation principale mobile">
+        <ul class="text-sm">
+          {nav.map((item) => (
+            <li>
+              <a href={item.href} class:list={[
+                "block px-5 py-3 uppercase tracking-[0.05em] font-semibold hover:bg-[color:var(--color-line-soft)] hover:text-[color:var(--color-brand)]",
+                isActive(item.href) && "text-[color:var(--color-brand)]",
+              ]} style="font-family:var(--font-display)">
+                {item.label}
+              </a>
+              {item.children && (
+                <ul class="border-l-2 border-[color:var(--color-line-soft)] ml-5 mb-2">
+                  {item.children.map((child) => (
+                    <li>
+                      <a href={child.href} class="block px-4 py-2 text-sm hover:text-[color:var(--color-brand)]">
+                        {child.label}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </li>
+          ))}
+        </ul>
+      </nav>
+    </details>
+  </div>
+</header>
+
+<script>
+  // Close mobile menu when a link is clicked
+  const menu = document.getElementById("mobile-menu") as HTMLDetailsElement | null;
+  if (menu) {
+    menu.addEventListener("click", (e) => {
+      const target = e.target as HTMLElement;
+      if (target.tagName === "A") menu.open = false;
+    });
+    document.addEventListener("click", (e) => {
+      if (menu.open && !menu.contains(e.target as Node)) menu.open = false;
+    });
+  }
+</script>

@@ -1,0 +1,45 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import ContactForm from "@/components/ContactForm.astro";
+import { site } from "@/data/site";
+---
+
+<BaseLayout
+  title="Contact — Agence de communication à Orléans, Loiret"
+  description="Contactez Emy, agence de communication cré'active à Orléans. Adresse : 27 rue des Chabassières, 45100 Orléans. Téléphone : 06 70 06 51 59."
+>
+  <section class="container-x py-16 md:py-20 text-center">
+    <p class="title-eyebrow">Emy</p>
+    <h1 class="title-section mt-3 !text-3xl md:!text-4xl">
+      Vous avez un projet de communication ?
+    </h1>
+    <p class="mt-5 max-w-2xl mx-auto text-[color:var(--color-ink-muted)] text-lg">
+      Contactez-moi via ce formulaire, je vous recontacterai dans les meilleurs délais.
+    </p>
+  </section>
+
+  <section class="container-x pb-12">
+    <div class="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto">
+      <a
+        href={`tel:${site.phoneE164}`}
+        class="block bg-white border border-[color:var(--color-line)] p-6 text-center hover:border-[color:var(--color-brand)] transition-colors"
+      >
+        <p class="title-eyebrow">Téléphone</p>
+        <p class="mt-2 font-semibold text-lg">{site.phone}</p>
+      </a>
+      <a
+        href={`mailto:${site.email}`}
+        class="block bg-white border border-[color:var(--color-line)] p-6 text-center hover:border-[color:var(--color-brand)] transition-colors"
+      >
+        <p class="title-eyebrow">Email</p>
+        <p class="mt-2 font-semibold text-lg break-all">{site.email}</p>
+      </a>
+      <div class="block bg-white border border-[color:var(--color-line)] p-6 text-center">
+        <p class="title-eyebrow">Adresse</p>
+        <p class="mt-2 font-semibold text-lg">{site.address.street}<br />{site.address.zip} {site.address.city}</p>
+      </div>
+    </div>
+  </section>
+
+  <ContactForm />
+</BaseLayout>

@@ -1,0 +1,53 @@
+---
+import type { CaseStudy } from "@/data/realisations";
+import Picture from "@/components/Picture.astro";
+interface Props {
+  data: CaseStudy;
+  reverse?: boolean;
+}
+const { data } = Astro.props;
+---
+
+<article class="py-12 border-b border-[color:var(--color-line)] last:border-b-0">
+  <header class="mb-6">
+    <h3 class="title-section !text-2xl md:!text-3xl">{data.client}</h3>
+    {data.subtitle && (
+      <p class="mt-1 text-[color:var(--color-ink-muted)] italic">{data.subtitle}</p>
+    )}
+  </header>
+
+  <div class="grid md:grid-cols-3 gap-8 mb-8">
+    <div>
+      <p class="title-eyebrow mb-2">Objectif</p>
+      <p class="text-[color:var(--color-ink-muted)] leading-relaxed">{data.objective}</p>
+    </div>
+    <div>
+      <p class="title-eyebrow mb-2">Créations</p>
+      <ul class="space-y-1.5 text-[color:var(--color-ink-muted)]">
+        {data.creations.map((c) => (
+          <li class="flex gap-2"><span class="text-[color:var(--color-brand)] mt-1.5 w-1.5 h-1.5 rounded-full bg-[color:var(--color-brand)] shrink-0"></span><span>{c}</span></li>
+        ))}
+      </ul>
+    </div>
+    {data.category && (
+      <div>
+        <p class="title-eyebrow mb-2">Catégorie</p>
+        <p class="text-[color:var(--color-ink-muted)]">{data.category}</p>
+      </div>
+    )}
+  </div>
+
+  {data.images.length > 0 && (
+    <ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+      {data.images.map((img) => (
+        <li class="bg-[color:var(--color-line-soft)] overflow-hidden">
+          <Picture
+            src={img.src}
+            alt={img.alt}
+            class="w-full h-auto"
+          />
+        </li>
+      ))}
+    </ul>
+  )}
+</article>

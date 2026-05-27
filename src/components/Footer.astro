@@ -1,0 +1,42 @@
+---
+import { site } from "@/data/site";
+const year = new Date().getFullYear();
+---
+
+<footer class="border-t border-[color:var(--color-line)] bg-white">
+  <div class="container-x py-10 flex flex-col md:flex-row items-center justify-between gap-6">
+    <div class="flex items-center gap-4 text-sm text-[color:var(--color-ink-muted)]">
+      <span>Emy &nbsp;—&nbsp; © {year}</span>
+      <a href="/mentions-legales" class="hover:text-[color:var(--color-brand)] underline-offset-4 hover:underline">
+        Mentions légales
+      </a>
+    </div>
+
+    <div class="flex items-center gap-3">
+      <a
+        href={site.social.facebook}
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="Facebook Emy Communication"
+        class="w-10 h-10 inline-flex items-center justify-center rounded-full border border-[color:var(--color-line)] hover:bg-[color:var(--color-brand)] hover:border-[color:var(--color-brand)] hover:text-white transition-colors"
+      >
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M22 12a10 10 0 1 0-11.6 9.9V14.9H7.9V12h2.5V9.8c0-2.5 1.5-3.9 3.7-3.9 1.1 0 2.2.2 2.2.2v2.4h-1.2c-1.2 0-1.6.8-1.6 1.6V12h2.8l-.4 2.9h-2.3v7A10 10 0 0 0 22 12Z"/>
+        </svg>
+      </a>
+      <a
+        href={site.social.instagram}
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="Instagram Emy Communication"
+        class="w-10 h-10 inline-flex items-center justify-center rounded-full border border-[color:var(--color-line)] hover:bg-[color:var(--color-brand)] hover:border-[color:var(--color-brand)] hover:text-white transition-colors"
+      >
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <rect x="3" y="3" width="18" height="18" rx="5"></rect>
+          <circle cx="12" cy="12" r="4"></circle>
+          <circle cx="17.5" cy="6.5" r="1" fill="currentColor"></circle>
+        </svg>
+      </a>
+    </div>
+  </div>
+</footer>

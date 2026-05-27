@@ -1,0 +1,23 @@
+{
+  "name": "emy-com",
+  "type": "module",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "npm run optimize-images && astro build && npm run prune-source-images",
+    "prune-source-images": "find dist/client/images -type f \\( -name '*.png' -o -name '*.jpg' -o -name '*.jpeg' \\) ! -name 'logo_emy.png' -delete && du -sh dist/client/images",
+    "preview": "astro preview",
+    "optimize-images": "node scripts/optimize-images.mjs",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/sitemap": "^3.2.1",
+    "@astrojs/vercel": "^8.0.6",
+    "@tailwindcss/vite": "^4.1.12",
+    "astro": "^5.1.0",
+    "sharp": "^0.33.5",
+    "tailwindcss": "^4.1.12"
+  }
+}

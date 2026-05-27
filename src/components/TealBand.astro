@@ -1,0 +1,31 @@
+---
+interface Props {
+  title?: string;
+  text?: string;
+  ctaLabel?: string;
+  ctaHref?: string;
+}
+const { title, text, ctaLabel, ctaHref } = Astro.props;
+---
+
+<aside class="bg-[color:var(--color-brand)] text-white">
+  <div class="container-x py-10 md:py-12 flex flex-col md:flex-row items-center justify-between gap-6 text-center md:text-left">
+    <div class="max-w-2xl">
+      {title && (
+        <p class="title-section !text-white">{title}</p>
+      )}
+      {text && (
+        <p class="mt-2 text-white/90">{text}</p>
+      )}
+    </div>
+    {ctaLabel && ctaHref && (
+      <a
+        href={ctaHref}
+        class="inline-block bg-white text-[color:var(--color-brand)] font-semibold uppercase tracking-[0.08em] text-sm px-6 py-3 rounded-sm hover:bg-[color:var(--color-line-soft)] transition-colors shrink-0"
+        style="font-family:var(--font-display)"
+      >
+        {ctaLabel}
+      </a>
+    )}
+  </div>
+</aside>
