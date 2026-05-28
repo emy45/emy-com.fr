@@ -124,9 +124,10 @@ const services = [
     <!-- Strong overlay for text contrast (1ère propo) -->
     <div aria-hidden="true" class="absolute inset-0 bg-gradient-to-b from-[#222831]/85 via-[#222831]/55 to-[#222831]/85"></div>
 
+
     <div class="relative z-10 container-x py-20 md:py-24 text-left">
-      <p class="font-display uppercase tracking-[0.22em] text-xs md:text-sm font-semibold text-[color:var(--color-brand)]" style="font-family:var(--font-display)">
-        Emy Communication — Orléans
+      <p class="font-display uppercase tracking-[0.16em] text-base md:text-lg lg:text-xl font-semibold text-white" style="font-family:var(--font-display)">
+        Bienvenue dans l'<span class="text-[color:var(--color-brand)]">Émy'sphère</span>
       </p>
 
       <h1 class="mt-6 font-display uppercase tracking-[0.02em] leading-[0.95] text-5xl md:text-7xl lg:text-8xl font-extrabold text-white" style="font-family:var(--font-display)">
@@ -313,5 +314,5 @@ const services = [
     </div>
   </Section>
 
-  <ContactForm />
+  <ContactForm dark={true} />
 </BaseLayout>

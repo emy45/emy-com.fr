@@ -1,6 +1,10 @@
 import type { APIRoute } from "astro";
+import { Resend } from "resend";
 
 export const prerender = false;
+
+const TO = "emy@emy-com.fr";
+const FROM = import.meta.env.CONTACT_FROM || "Emy Communication <onboarding@resend.dev>";
 
 export const POST: APIRoute = async ({ request }) => {
   let payload: Record<string, FormDataEntryValue | string> = {};
@@ -22,6 +26,7 @@ export const POST: APIRoute = async ({ request }) => {
   const honeypot = String(payload.website || "");
 
   if (honeypot) {
+    // Honeypot rempli : on simule un succès pour ne pas indiquer au bot qu'il a été détecté
     return new Response(JSON.stringify({ ok: true }), {
       status: 200,
       headers: { "content-type": "application/json" },
@@ -53,24 +58,87 @@ export const POST: APIRoute = async ({ request }) => {
     );
   }
 
-  // === Envoi du message ===
-  // Brancher ici Resend / Sendgrid / SMTP / Formspree selon la solution retenue.
-  // Exemple Resend (à activer avec RESEND_API_KEY + npm i resend) :
-  //
-  // import { Resend } from "resend";
-  // const resend = new Resend(import.meta.env.RESEND_API_KEY);
-  // await resend.emails.send({
-  //   from: "Site emy-com <site@emy-com.fr>",
-  //   to: "emy@emy-com.fr",
-  //   reply_to: email,
-  //   subject: `Nouveau message — ${name}${company ? " (" + company + ")" : ""}`,
-  //   text: `De : ${name}\nEmail : ${email}\nEntreprise : ${company}\n\n${message}`,
-  // });
+  // === Envoi du message via Resend ===
+  const apiKey = import.meta.env.RESEND_API_KEY;
+  if (!apiKey) {
+    console.error("[contact-form] RESEND_API_KEY manquant dans les variables d'environnement");
+    return new Response(
+      JSON.stringify({ ok: false, error: "config_missing" }),
+      { status: 500, headers: { "content-type": "application/json" } }
+    );
+  }
 
-  console.log("[contact-form]", { name, email, company, message });
+  const resend = new Resend(apiKey);
+  const subject = `Nouveau message via emy-com.fr — ${name}${company ? " (" + company + ")" : ""}`;
+  const text = [
+    `Nouveau message reçu via le formulaire de contact emy-com.fr`,
+    ``,
+    `De : ${name}`,
+    `Email : ${email}`,
+    company ? `Entreprise : ${company}` : null,
+    ``,
+    `Message :`,
+    message,
+  ]
+    .filter(Boolean)
+    .join("\n");
+
+  const html = `
+    <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 600px; margin: 0 auto; padding: 24px; color: #313131;">
+      <h2 style="color: #00a9b8; font-family: Montserrat, sans-serif; text-transform: uppercase; letter-spacing: 0.04em; font-size: 20px; margin: 0 0 24px;">
+        Nouveau message — emy-com.fr
+      </h2>
+      <table style="width: 100%; border-collapse: collapse; margin-bottom: 24px;">
+        <tr><td style="padding: 8px 0; color: #666; width: 110px;">De :</td><td style="padding: 8px 0;"><strong>${escapeHtml(name)}</strong></td></tr>
+        <tr><td style="padding: 8px 0; color: #666;">Email :</td><td style="padding: 8px 0;"><a href="mailto:${escapeHtml(email)}" style="color: #00a9b8;">${escapeHtml(email)}</a></td></tr>
+        ${company ? `<tr><td style="padding: 8px 0; color: #666;">Entreprise :</td><td style="padding: 8px 0;">${escapeHtml(company)}</td></tr>` : ""}
+      </table>
+      <div style="background: #f3f3f3; padding: 16px 20px; border-left: 3px solid #00a9b8; border-radius: 4px;">
+        <p style="margin: 0 0 8px; color: #666; font-size: 13px; text-transform: uppercase; letter-spacing: 0.06em;">Message</p>
+        <p style="margin: 0; white-space: pre-wrap; line-height: 1.6;">${escapeHtml(message)}</p>
+      </div>
+      <p style="margin-top: 24px; font-size: 13px; color: #999;">
+        Tu peux répondre directement à cet email — la réponse partira vers <strong>${escapeHtml(email)}</strong>.
+      </p>
+    </div>
+  `;
+
+  try {
+    const { error } = await resend.emails.send({
+      from: FROM,
+      to: TO,
+      replyTo: email,
+      subject,
+      text,
+      html,
+    });
+
+    if (error) {
+      console.error("[contact-form] Resend error:", error);
+      return new Response(
+        JSON.stringify({ ok: false, error: "send_failed" }),
+        { status: 502, headers: { "content-type": "application/json" } }
+      );
+    }
+  } catch (err) {
+    console.error("[contact-form] Exception:", err);
+    return new Response(
+      JSON.stringify({ ok: false, error: "send_exception" }),
+      { status: 500, headers: { "content-type": "application/json" } }
+    );
+  }
 
   return new Response(JSON.stringify({ ok: true }), {
     status: 200,
     headers: { "content-type": "application/json" },
   });
 };
+
+function escapeHtml(s: string): string {
+  return s
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
