@@ -88,7 +88,7 @@ const services = [
 <BaseLayout
   title="Agence de communication cré'active à Orléans"
   description="Agence à taille humaine à Orléans : stratégie, identité visuelle, print & web. Accompagnement global en Centre-Val de Loire & IDF depuis 2015."
-  preloadImage="/images/emy_sphere.webp"
+  preloadImage="/images/emy_sphere_site.webp"
 >
   <script
     type="application/ld+json"
@@ -107,55 +107,88 @@ const services = [
       })),
     })}
   />
-  <!-- HERO -->
-  <section class="relative grid grid-cols-1 md:grid-cols-2">
-    <!-- Left: teal panel with title and CTAs -->
-    <div class="relative overflow-hidden bg-[color:var(--color-brand)] text-white flex items-center min-h-[70vh] md:min-h-[640px]">
-      <div class="relative w-full px-8 py-20 md:px-12 lg:px-20 md:py-24">
-        <p class="font-display uppercase tracking-[0.18em] text-xs md:text-sm font-semibold text-white/90" style="font-family:var(--font-display)">
-          Emy Communication
-        </p>
-        <h1 class="mt-6 font-display uppercase tracking-[0.04em] leading-[0.95] text-5xl md:text-6xl lg:text-7xl font-extrabold" style="font-family:var(--font-display)">
-          Agence <br />Cré'active
-        </h1>
-        <p class="mt-8 max-w-md text-white/90 text-lg leading-relaxed">
-          Une démarche humaine &amp; créative en interaction avec un monde qui évolue.
-        </p>
-        <div class="mt-10 flex flex-wrap gap-3">
-          <a
-            href="/emy"
-            class="inline-block px-7 py-[0.95rem] text-sm font-semibold uppercase tracking-[0.12em] border-2 border-white text-white rounded-full hover:bg-white hover:text-[color:var(--color-brand)] transition-colors"
-            style="font-family:var(--font-display)"
-          >
-            En savoir plus
-          </a>
-          <a
-            href="/realisations"
-            class="inline-block px-7 py-[0.95rem] text-sm font-semibold uppercase tracking-[0.12em] bg-white text-[color:var(--color-brand)] rounded-full hover:bg-white/90 transition-colors"
-            style="font-family:var(--font-display)"
-          >
-            Mes réalisations
-          </a>
-        </div>
+  <!-- HERO plein écran : sphère en background + mot tournant -->
+  <section class="relative overflow-hidden bg-[#222831] text-white min-h-[80vh] md:min-h-[640px] flex items-center">
+    <!-- Sphere background (fournie par Emy : sphère à droite, breathing room) -->
+    <img
+      src="/images/emy_sphere_site.webp"
+      alt=""
+      aria-hidden="true"
+      loading="eager"
+      fetchpriority="high"
+      decoding="async"
+      width="1600"
+      height="1100"
+      class="absolute inset-0 h-full w-full object-cover object-right"
+    />
+    <!-- Strong overlay for text contrast (1ère propo) -->
+    <div aria-hidden="true" class="absolute inset-0 bg-gradient-to-b from-[#222831]/85 via-[#222831]/55 to-[#222831]/85"></div>
+
+    <div class="relative z-10 container-x py-20 md:py-24 text-left">
+      <p class="font-display uppercase tracking-[0.22em] text-xs md:text-sm font-semibold text-[color:var(--color-brand)]" style="font-family:var(--font-display)">
+        Emy Communication — Orléans
+      </p>
+
+      <h1 class="mt-6 font-display uppercase tracking-[0.02em] leading-[0.95] text-5xl md:text-7xl lg:text-8xl font-extrabold text-white" style="font-family:var(--font-display)">
+        <span class="block">Agence</span>
+        <span
+          class="hero-rotator block normal-case tracking-normal font-normal"
+          data-words="cré 'active|humaine|engagée"
+          data-colors="#00a9b8|#f5b800|#e91e63"
+          style="color:#00a9b8;font-family:'Allura',cursive;font-size:1.8em;line-height:0.9;margin-top:-0.05em;"
+        >cré 'active</span>
+      </h1>
+
+      <p class="mt-8 max-w-xl text-white/85 text-lg md:text-xl leading-relaxed">
+        Une démarche humaine &amp; créative en interaction avec un monde qui évolue.
+      </p>
+
+      <div class="mt-10 flex flex-wrap items-center justify-start gap-3">
+        <a
+          href="/realisations"
+          class="inline-block px-7 py-[0.95rem] text-sm font-semibold uppercase tracking-[0.12em] bg-[color:var(--color-brand)] text-white rounded-full hover:bg-[color:var(--color-brand-dark)] transition-colors"
+          style="font-family:var(--font-display)"
+        >
+          Mes réalisations
+        </a>
+        <a
+          href="/emy"
+          class="inline-block px-7 py-[0.95rem] text-sm font-semibold uppercase tracking-[0.12em] border-2 border-white text-white rounded-full hover:bg-white hover:text-[#222831] transition-colors"
+          style="font-family:var(--font-display)"
+        >
+          En savoir plus
+        </a>
       </div>
     </div>
-
-    <!-- Right: dark panel with sphere visual -->
-    <div
-      class="relative bg-[#222831] flex items-center justify-center overflow-hidden min-h-[420px] md:min-h-[640px]"
-    >
-      <img
-        src="/images/emy_sphere.webp"
-        alt="Emy — conseil en communication"
-        loading="eager"
-        fetchpriority="high"
-        decoding="async"
-        width="1600"
-        height="1100"
-        class="absolute inset-0 h-full w-full object-cover object-center"
-      />
-    </div>
   </section>
+
+  <script>
+    (function () {
+      const el = document.querySelector<HTMLElement>(".hero-rotator");
+      if (!el || !el.dataset.words) return;
+      const words = el.dataset.words.split("|");
+      const colors = (el.dataset.colors || "").split("|");
+      if (words.length <= 1) return;
+      // Respect reduced motion preference
+      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+      let i = 0;
+      el.style.transition = "opacity 0.35s ease, transform 0.35s ease, color 0.35s ease";
+      setInterval(() => {
+        el.style.opacity = "0";
+        el.style.transform = "translateY(-8px)";
+        setTimeout(() => {
+          i = (i + 1) % words.length;
+          el.textContent = words[i];
+          if (colors[i]) el.style.color = colors[i];
+          el.style.transform = "translateY(8px)";
+          requestAnimationFrame(() => {
+            el.style.opacity = "1";
+            el.style.transform = "translateY(0)";
+          });
+        }, 350);
+      }, 2800);
+    })();
+  </script>
 
   <!-- PRESTATIONS -->
   <Section
@@ -176,7 +209,7 @@ const services = [
             </svg>
           </div>
           <h3 class="text-2xl font-bold leading-tight" style="font-family:var(--font-display)">Conseil</h3>
-          <p class="mt-3 text-sm text-white/90 leading-relaxed">
+          <p class="mt-3 text-base text-white/90 leading-relaxed">
             Accompagnement stratégique dans vos démarches de communication institutionnelle, commerciale &amp; interne.
           </p>
         </div>
@@ -194,7 +227,7 @@ const services = [
             </svg>
           </div>
           <h3 class="text-2xl font-bold leading-tight" style="font-family:var(--font-display)">Création</h3>
-          <p class="mt-3 text-sm text-white/90 leading-relaxed">
+          <p class="mt-3 text-base text-white/90 leading-relaxed">
             Conception graphique et suivi de fabrication de l'ensemble de vos supports de communication print &amp; web.
           </p>
         </div>
@@ -211,7 +244,7 @@ const services = [
             </svg>
           </div>
           <h3 class="text-2xl font-bold leading-tight" style="font-family:var(--font-display)">Formation</h3>
-          <p class="mt-3 text-sm text-white/95 leading-relaxed">
+          <p class="mt-3 text-base text-white/95 leading-relaxed">
             Chaîne graphique — Initiation et perfectionnement sur les logiciels Photoshop, Illustrator, InDesign — Stratégie de communication.
           </p>
         </div>
@@ -237,19 +270,46 @@ const services = [
     title="Au projet ou en régie"
     intro="En fonction du besoin de communication, deux formules d'accompagnement sont possibles. Dans les deux cas, cela commence toujours par un premier rendez-vous (physique ou visio), en fonction de vos disponibilités."
   >
-    <div class="grid md:grid-cols-2 gap-8 mt-4">
-      <FormuleCard
-        icon="/images/forfait.png"
-        iconAlt="Accompagnement au projet — formule forfait"
-        title="Au projet"
-        text="Vous avez un projet de communication précis et vous souhaitez être accompagné ponctuellement sur la mise en place d'une opération ou sur la création d'un ou plusieurs supports de communication."
-      />
-      <FormuleCard
-        icon="/images/regie.png"
-        iconAlt="Accompagnement long terme en régie"
-        title="En régie"
-        text="Vous avez besoin d'un accompagnement sur le long terme pour élaborer une stratégie de communication et la mettre en place sur plusieurs mois, avec une présence sur place possible en fonction des étapes."
-      />
+    <div class="grid md:grid-cols-2 gap-5 md:gap-6 max-w-5xl mx-auto mt-4">
+      <!-- Au projet -->
+      <article class="group relative block rounded-2xl p-8 text-white bg-[color:var(--color-brand)] hover:bg-[color:var(--color-brand-dark)] transition-all duration-300 hover:-translate-y-1 hover:shadow-xl overflow-hidden">
+        <div class="absolute -right-6 -top-6 w-32 h-32 rounded-full bg-white/10 group-hover:scale-125 transition-transform duration-500"></div>
+        <div class="relative">
+          <div class="w-14 h-14 rounded-2xl bg-white/15 flex items-center justify-center mb-5">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="12" cy="12" r="10"></circle>
+              <polyline points="12 6 12 12 16 14"></polyline>
+            </svg>
+          </div>
+          <h3 class="text-2xl font-bold leading-tight text-white" style="font-family:var(--font-display)">Au projet</h3>
+          <p class="mt-3 text-base text-white/90 leading-relaxed">
+            Vous avez un projet de communication précis et vous souhaitez être accompagné
+            ponctuellement sur la mise en place d'une opération ou sur la création d'un ou
+            plusieurs supports de communication.
+          </p>
+        </div>
+      </article>
+
+      <!-- En régie -->
+      <article class="group relative block rounded-2xl p-8 text-white bg-[#e91e63] hover:bg-[#c2185b] transition-all duration-300 hover:-translate-y-1 hover:shadow-xl overflow-hidden">
+        <div class="absolute -right-6 -top-6 w-32 h-32 rounded-full bg-white/10 group-hover:scale-125 transition-transform duration-500"></div>
+        <div class="relative">
+          <div class="w-14 h-14 rounded-2xl bg-white/15 flex items-center justify-center mb-5">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+              <circle cx="9" cy="7" r="4"></circle>
+              <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+              <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+            </svg>
+          </div>
+          <h3 class="text-2xl font-bold leading-tight text-white" style="font-family:var(--font-display)">En régie</h3>
+          <p class="mt-3 text-base text-white/90 leading-relaxed">
+            Vous avez besoin d'un accompagnement sur le long terme pour élaborer une
+            stratégie de communication et la mettre en place sur plusieurs mois, avec une
+            présence sur place possible en fonction des étapes.
+          </p>
+        </div>
+      </article>
     </div>
   </Section>
 
