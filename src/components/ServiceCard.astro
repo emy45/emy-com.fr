@@ -5,8 +5,9 @@ interface Props {
   iconAlt: string;
   title?: string;
   text: string;
+  iconClass?: string;
 }
-const { icon, iconAlt, title, text } = Astro.props;
+const { icon, iconAlt, title, text, iconClass = "h-24 w-auto mb-5" } = Astro.props;
 ---
 
 <article class="flex flex-col items-center text-center px-2">
@@ -15,7 +16,7 @@ const { icon, iconAlt, title, text } = Astro.props;
     alt={iconAlt}
     width={120}
     height={120}
-    class="h-24 w-auto mb-5"
+    class={iconClass}
   />
   {title && (
     <h3 class="font-display uppercase tracking-[0.06em] text-base font-semibold mb-2" style="font-family:var(--font-display)">

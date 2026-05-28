@@ -1,0 +1,72 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { categories } from "@/data/realisations";
+---
+
+<BaseLayout
+  title="Page introuvable"
+  description="La page que vous cherchez n'existe pas — retour à l'accueil Emy Communication."
+  noindex={true}
+>
+  <!-- Hero 404 sombre -->
+  <section class="relative overflow-hidden bg-[#222831] text-white">
+    <span aria-hidden="true" class="pointer-events-none absolute -right-20 -top-20 w-72 h-72 rounded-full bg-white/8"></span>
+    <span aria-hidden="true" class="pointer-events-none absolute -left-24 bottom-[-6rem] w-64 h-64 rounded-full bg-white/8"></span>
+    <span aria-hidden="true" class="pointer-events-none absolute right-[14%] bottom-6 w-16 h-16 rounded-full bg-white/5"></span>
+
+    <div class="container-x py-24 md:py-32 text-center relative">
+      <p class="font-display uppercase tracking-[0.18em] text-xs md:text-sm font-semibold text-white/70" style="font-family:var(--font-display)">
+        Erreur 404
+      </p>
+      <h1 class="font-display uppercase tracking-[0.04em] mt-4 text-5xl md:text-7xl font-extrabold text-[color:var(--color-brand)] leading-[0.95]" style="font-family:var(--font-display)">
+        Page introuvable
+      </h1>
+      <p class="mt-6 max-w-xl mx-auto text-white/80 text-lg leading-relaxed">
+        La page que vous cherchez n'existe pas, a été déplacée ou n'a jamais existé.
+        Pas de souci — voici quelques pistes pour retrouver votre chemin.
+      </p>
+      <div class="mt-10 flex flex-wrap items-center justify-center gap-3">
+        <a
+          href="/"
+          class="inline-flex items-center gap-2 px-7 py-3 rounded-full bg-[color:var(--color-brand)] text-white text-sm font-semibold uppercase tracking-[0.12em] hover:bg-[color:var(--color-brand-dark)] transition-colors"
+          style="font-family:var(--font-display)"
+        >
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="m3 12 9-9 9 9"></path>
+            <path d="M5 10v10h14V10"></path>
+          </svg>
+          Retour à l'accueil
+        </a>
+        <a
+          href="/realisations"
+          class="inline-flex items-center gap-2 px-7 py-3 rounded-full border-2 border-white text-white text-sm font-semibold uppercase tracking-[0.12em] hover:bg-white hover:text-[#222831] transition-colors"
+          style="font-family:var(--font-display)"
+        >
+          Voir mes réalisations
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Suggestions de pages -->
+  <section class="container-x py-16 md:py-20">
+    <p class="title-eyebrow text-center">Pages populaires</p>
+    <h2 class="title-section text-center mt-3 mb-10 !text-2xl md:!text-3xl">
+      Et si on jetait un œil ici ?
+    </h2>
+    <ul class="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto">
+      {categories.slice(0, 4).map((cat) => (
+        <li>
+          <a
+            href={cat.href}
+            class="block rounded-2xl bg-[color:var(--color-line-soft)] p-5 text-center hover:bg-[color:var(--color-brand-light)] hover:text-[color:var(--color-brand-dark)] transition-colors"
+          >
+            <p class="font-display uppercase tracking-[0.04em] text-sm font-bold" style="font-family:var(--font-display)">
+              {cat.title}
+            </p>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </section>
+</BaseLayout>

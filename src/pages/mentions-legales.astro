@@ -1,71 +1,202 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import { site } from "@/data/site";
+
+const { legal } = site;
+const lastUpdateFr = new Date(legal.lastUpdate).toLocaleDateString("fr-FR", {
+  day: "numeric",
+  month: "long",
+  year: "numeric",
+});
 ---
 
 <BaseLayout
   title="Mentions légales"
-  description="Mentions légales du site emy-com.fr — Emilie Richard Langlois, agence de communication à Orléans."
+  description="Mentions légales et politique de confidentialité du site emy-com.fr — Émilie Richard, agence de communication à Orléans."
   noindex={true}
 >
   <article class="container-narrow py-16 md:py-20">
-    <h1 class="title-section mb-10">Mentions légales</h1>
+    <h1 class="title-section mb-3">Mentions légales</h1>
+    <p class="text-sm text-[color:var(--color-ink-muted)] mb-10">
+      Dernière mise à jour : {lastUpdateFr}
+    </p>
 
+    <!-- 1. Éditeur -->
     <section class="mb-10">
       <h2 class="font-display uppercase tracking-[0.06em] text-lg mb-3 text-[color:var(--color-brand)]" style="font-family:var(--font-display)">
-        Informations légales
+        1. Éditeur du site
       </h2>
       <p class="text-[color:var(--color-ink-muted)] leading-relaxed">
-        emy-com.fr est le site officiel de l'entreprise individuelle Emilie Richard Langlois.
+        Le site <strong>{site.url.replace(/^https?:\/\//, "")}</strong> est édité par&nbsp;:
       </p>
       <ul class="mt-4 space-y-1 text-[color:var(--color-ink-muted)]">
-        <li>Adresse du Siège : {site.address.street} – {site.address.zip} {site.address.city.toUpperCase()}</li>
-        <li>Tél. : {site.phone}</li>
-        <li>Courriel : <a href={`mailto:${site.email}`} class="text-[color:var(--color-brand)] hover:underline">{site.email}</a></li>
-        <li>Directeur de la publication : Emilie Langlois</li>
+        <li><strong>{legal.operator}</strong></li>
+        <li>{legal.legalForm}</li>
+        <li>{site.address.street} — {site.address.zip} {site.address.city}</li>
+        <li>Téléphone&nbsp;: <a href={`tel:${site.phoneE164}`} class="text-[color:var(--color-brand)] hover:underline">{site.phone}</a></li>
+        <li>Courriel&nbsp;: <a href={`mailto:${site.email}`} class="text-[color:var(--color-brand)] hover:underline">{site.email}</a></li>
+        <li>SIRET&nbsp;: {legal.siret}</li>
+        <li>SIREN&nbsp;: {legal.siren}</li>
+        <li>Code APE/NAF&nbsp;: {legal.apeCode} — {legal.apeLabel}</li>
+        <li>{legal.vatNote}</li>
+        <li>Directrice de la publication&nbsp;: {legal.publicationDirector}</li>
       </ul>
     </section>
 
+    <!-- 2. Hébergeur -->
     <section class="mb-10">
       <h2 class="font-display uppercase tracking-[0.06em] text-lg mb-3 text-[color:var(--color-brand)]" style="font-family:var(--font-display)">
-        Protection de la vie privée
+        2. Hébergeur
       </h2>
       <p class="text-[color:var(--color-ink-muted)] leading-relaxed">
-        Les cookies de ce site sont utilisés par le système de statistique Google Analytics
-        et par le système de gestion de contenu du site. Aucune information nominative n'est
-        enregistrée.
+        Le site est hébergé par&nbsp;:
+      </p>
+      <ul class="mt-4 space-y-1 text-[color:var(--color-ink-muted)]">
+        <li><strong>{legal.host.name}</strong></li>
+        <li>{legal.host.address}</li>
+        <li>
+          Site&nbsp;:
+          <a href={legal.host.website} target="_blank" rel="noopener noreferrer" class="text-[color:var(--color-brand)] hover:underline">
+            {legal.host.website}
+          </a>
+        </li>
+      </ul>
+    </section>
+
+    <!-- 3. Propriété intellectuelle -->
+    <section class="mb-10">
+      <h2 class="font-display uppercase tracking-[0.06em] text-lg mb-3 text-[color:var(--color-brand)]" style="font-family:var(--font-display)">
+        3. Propriété intellectuelle
+      </h2>
+      <p class="text-[color:var(--color-ink-muted)] leading-relaxed">
+        L'ensemble du contenu du site (textes, images, vidéos, illustrations, logo, charte
+        graphique, photographies, mises en page) est protégé par le Code de la propriété
+        intellectuelle et reste la propriété exclusive d'{legal.operator} ou de ses ayants
+        droit. Le droit de reproduction et de représentation est réservé à l'usage privé
+        et à la consultation personnelle des utilisateurs. Toute autre utilisation,
+        reproduction, diffusion ou exploitation, totale ou partielle, est strictement
+        interdite sans autorisation écrite préalable, sous peine de poursuites
+        conformément aux articles L.335-2 et suivants du Code de la propriété
+        intellectuelle.
       </p>
       <p class="mt-4 text-[color:var(--color-ink-muted)] leading-relaxed">
-        En utilisant votre logiciel de messagerie, vous nous communiquez votre adresse
-        électronique. Vous pouvez demander à tout moment, par simple courrier électronique ou
-        par lettre, de ne plus figurer dans nos fichiers de contacts. Conformément à la loi
-        Informatique et libertés du 6 janvier 1978, vous disposez d'un droit d'accès, de
-        modification, de rectification et de suppression des données vous concernant.
+        Les marques, logos et noms commerciaux des clients présentés dans les
+        réalisations restent la propriété de leurs détenteurs respectifs et sont
+        reproduits avec leur accord à titre de référence professionnelle.
       </p>
     </section>
 
+    <!-- 4. Données personnelles -->
     <section class="mb-10">
       <h2 class="font-display uppercase tracking-[0.06em] text-lg mb-3 text-[color:var(--color-brand)]" style="font-family:var(--font-display)">
-        Droits d'utilisation et de reproduction
+        4. Données personnelles (RGPD)
       </h2>
+
+      <h3 class="font-display uppercase tracking-[0.06em] text-base mb-2 mt-6" style="font-family:var(--font-display)">
+        Responsable de traitement
+      </h3>
       <p class="text-[color:var(--color-ink-muted)] leading-relaxed">
-        Le droit de reproduction et/ou droit de représentation des données du site Emy est
-        exclusivement destiné à l'usage privé et/ou aux seules fins de consultation
-        personnelle et privée des utilisateurs du réseau Internet. Toute autre utilisation
-        est strictement interdite et susceptible de poursuites conformément aux dispositions
-        du Code de la Propriété Intellectuelle français, des règlements nationaux et des
-        conventions internationales en vigueur.
+        {legal.operator}, {legal.legalForm.toLowerCase()}, {site.address.street}, {site.address.zip} {site.address.city} —
+        <a href={`mailto:${site.email}`} class="text-[color:var(--color-brand)] hover:underline">{site.email}</a>.
+      </p>
+
+      <h3 class="font-display uppercase tracking-[0.06em] text-base mb-2 mt-6" style="font-family:var(--font-display)">
+        Données collectées, finalités et bases légales
+      </h3>
+      <ul class="mt-2 space-y-3 text-[color:var(--color-ink-muted)] leading-relaxed list-disc pl-5">
+        <li>
+          <strong>Formulaire de contact</strong> (nom, email, entreprise, message)&nbsp;:
+          finalité&nbsp;= répondre à la demande de l'utilisateur. Base légale&nbsp;= consentement
+          (envoi du formulaire) et mesures précontractuelles. Conservation&nbsp;= 3 ans à
+          compter du dernier échange à des fins de prospection commerciale, puis archivage
+          intermédiaire selon obligations légales.
+        </li>
+        <li>
+          <strong>Mesure d'audience (Google Analytics)</strong>&nbsp;: finalité&nbsp;=
+          statistiques anonymisées de fréquentation. Base légale&nbsp;= consentement de
+          l'utilisateur via le bandeau cookies. Conservation des données&nbsp;= 13 mois
+          maximum.
+        </li>
+      </ul>
+
+      <h3 class="font-display uppercase tracking-[0.06em] text-base mb-2 mt-6" style="font-family:var(--font-display)">
+        Destinataires
+      </h3>
+      <p class="text-[color:var(--color-ink-muted)] leading-relaxed">
+        Les données collectées sont destinées exclusivement au responsable de traitement.
+        Certaines sont transmises aux sous-traitants techniques suivants&nbsp;:
+      </p>
+      <ul class="mt-2 space-y-1 text-[color:var(--color-ink-muted)] list-disc pl-5">
+        <li><strong>Vercel Inc.</strong> (hébergement, États-Unis) — sous garanties contractuelles RGPD</li>
+        <li><strong>Resend</strong> (acheminement des emails du formulaire de contact, États-Unis) — sous garanties contractuelles RGPD</li>
+        <li><strong>Google LLC</strong> (Google Analytics, États-Unis) — sous accord de protection des données (DPF)</li>
+      </ul>
+
+      <h3 class="font-display uppercase tracking-[0.06em] text-base mb-2 mt-6" style="font-family:var(--font-display)">
+        Transferts hors UE
+      </h3>
+      <p class="text-[color:var(--color-ink-muted)] leading-relaxed">
+        Certains sous-traitants (Vercel, Resend, Google) peuvent héberger ou traiter les
+        données aux États-Unis. Ces transferts sont encadrés par des clauses contractuelles
+        types adoptées par la Commission européenne et, le cas échéant, par le Data Privacy
+        Framework UE–US.
+      </p>
+
+      <h3 class="font-display uppercase tracking-[0.06em] text-base mb-2 mt-6" style="font-family:var(--font-display)">
+        Vos droits
+      </h3>
+      <p class="text-[color:var(--color-ink-muted)] leading-relaxed">
+        Conformément au Règlement (UE) 2016/679 (RGPD) et à la loi Informatique et Libertés
+        modifiée, vous disposez d'un droit d'accès, de rectification, d'effacement, de
+        limitation, de portabilité, d'opposition et du droit de retirer votre consentement
+        à tout moment. Vous pouvez exercer ces droits par courriel à
+        <a href={`mailto:${site.email}`} class="text-[color:var(--color-brand)] hover:underline">{site.email}</a>
+        en justifiant de votre identité. Vous disposez également du droit d'introduire une
+        réclamation auprès de la
+        <a href="https://www.cnil.fr/fr/plaintes" target="_blank" rel="noopener noreferrer" class="text-[color:var(--color-brand)] hover:underline">
+          CNIL
+        </a>.
       </p>
     </section>
 
-    <section>
+    <!-- 5. Cookies -->
+    <section class="mb-10">
       <h2 class="font-display uppercase tracking-[0.06em] text-lg mb-3 text-[color:var(--color-brand)]" style="font-family:var(--font-display)">
-        Droit applicable
+        5. Cookies
       </h2>
       <p class="text-[color:var(--color-ink-muted)] leading-relaxed">
-        De convention expresse entre les parties, le droit applicable aux présentes et à
-        leurs conséquences est exclusivement le Droit Français, tant en ce qui concerne les
-        règles de procédure que celles du fond.
+        Le site dépose, après recueil de votre consentement, des cookies de mesure d'audience
+        Google Analytics. Aucun cookie n'est déposé tant que vous n'avez pas accepté via le
+        bandeau de consentement. Vous pouvez à tout moment modifier vos préférences en
+        cliquant sur le lien&nbsp;«&nbsp;Gérer les cookies&nbsp;» en pied de page.
+      </p>
+      <ul class="mt-3 text-[color:var(--color-ink-muted)] list-disc pl-5 space-y-1">
+        <li><strong>Cookies strictement nécessaires</strong> (fonctionnement du site)&nbsp;: exempts de consentement.</li>
+        <li><strong>Cookies de mesure d'audience</strong> (Google Analytics)&nbsp;: durée 13 mois, soumis au consentement.</li>
+      </ul>
+    </section>
+
+    <!-- 6. Crédits -->
+    <section class="mb-10">
+      <h2 class="font-display uppercase tracking-[0.06em] text-lg mb-3 text-[color:var(--color-brand)]" style="font-family:var(--font-display)">
+        6. Crédits
+      </h2>
+      <p class="text-[color:var(--color-ink-muted)] leading-relaxed">
+        Conception et réalisation&nbsp;: Emy Communication. Visuels des réalisations&nbsp;:
+        Emy Communication et clients référencés (utilisation à titre de portfolio
+        professionnel).
+      </p>
+    </section>
+
+    <!-- 7. Droit applicable -->
+    <section>
+      <h2 class="font-display uppercase tracking-[0.06em] text-lg mb-3 text-[color:var(--color-brand)]" style="font-family:var(--font-display)">
+        7. Droit applicable
+      </h2>
+      <p class="text-[color:var(--color-ink-muted)] leading-relaxed">
+        Les présentes mentions sont régies par le droit français. Tout litige relatif à
+        leur interprétation ou à leur exécution relève de la compétence des tribunaux
+        français du ressort du domicile du responsable de traitement.
       </p>
     </section>
   </article>

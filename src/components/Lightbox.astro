@@ -1,0 +1,137 @@
+---
+// Lightweight vanilla lightbox. Listens for clicks on `[data-lightbox-trigger]`
+// inside the page, groups by `data-lightbox-group`, navigates with arrows.
+---
+
+<div
+  id="lightbox"
+  class="fixed inset-0 z-[100] hidden items-center justify-center bg-black/90 backdrop-blur-sm"
+  role="dialog"
+  aria-modal="true"
+  aria-label="Visionneuse d'images"
+>
+  <button
+    type="button"
+    id="lightbox-close"
+    class="absolute top-4 right-4 md:top-6 md:right-6 w-12 h-12 inline-flex items-center justify-center rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-white"
+    aria-label="Fermer la visionneuse"
+  >
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <line x1="18" y1="6" x2="6" y2="18"></line>
+      <line x1="6" y1="6" x2="18" y2="18"></line>
+    </svg>
+  </button>
+
+  <button
+    type="button"
+    id="lightbox-prev"
+    class="absolute left-2 md:left-6 top-1/2 -translate-y-1/2 w-12 h-12 inline-flex items-center justify-center rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-white"
+    aria-label="Image précédente"
+  >
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <polyline points="15 18 9 12 15 6"></polyline>
+    </svg>
+  </button>
+
+  <button
+    type="button"
+    id="lightbox-next"
+    class="absolute right-2 md:right-6 top-1/2 -translate-y-1/2 w-12 h-12 inline-flex items-center justify-center rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-white"
+    aria-label="Image suivante"
+  >
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </button>
+
+  <figure class="max-w-[92vw] max-h-[90vh] flex flex-col items-center gap-3">
+    <img
+      id="lightbox-image"
+      src=""
+      alt=""
+      class="max-w-full max-h-[80vh] object-contain rounded-lg shadow-2xl"
+    />
+    <figcaption id="lightbox-caption" class="text-white/80 text-sm md:text-base text-center px-4"></figcaption>
+  </figure>
+</div>
+
+<script>
+  (function () {
+    const lightbox = document.getElementById("lightbox") as HTMLDivElement | null;
+    const imageEl = document.getElementById("lightbox-image") as HTMLImageElement | null;
+    const captionEl = document.getElementById("lightbox-caption") as HTMLElement | null;
+    const closeBtn = document.getElementById("lightbox-close");
+    const prevBtn = document.getElementById("lightbox-prev");
+    const nextBtn = document.getElementById("lightbox-next");
+    if (!lightbox || !imageEl || !captionEl || !closeBtn || !prevBtn || !nextBtn) return;
+
+    type Item = { src: string; alt: string };
+    let items: Item[] = [];
+    let index = 0;
+    let lastFocus: HTMLElement | null = null;
+
+    function show(i: number) {
+      if (!items.length || !imageEl || !captionEl) return;
+      index = ((i % items.length) + items.length) % items.length;
+      const { src, alt } = items[index];
+      imageEl.src = src;
+      imageEl.alt = alt;
+      captionEl.textContent = alt;
+    }
+
+    function open(group: string, startSrc: string) {
+      if (!lightbox) return;
+      const triggers = Array.from(
+        document.querySelectorAll<HTMLElement>(`[data-lightbox-trigger][data-lightbox-group="${group}"]`)
+      );
+      items = triggers.map((el) => ({
+        src: el.dataset.lightboxSrc || "",
+        alt: el.dataset.lightboxAlt || "",
+      }));
+      const startIdx = Math.max(0, items.findIndex((it) => it.src === startSrc));
+      lastFocus = document.activeElement as HTMLElement;
+      lightbox.classList.remove("hidden");
+      lightbox.classList.add("flex");
+      document.body.style.overflow = "hidden";
+      show(startIdx);
+      (closeBtn as HTMLElement)?.focus();
+    }
+
+    function close() {
+      if (!lightbox) return;
+      lightbox.classList.add("hidden");
+      lightbox.classList.remove("flex");
+      document.body.style.overflow = "";
+      if (lastFocus && typeof lastFocus.focus === "function") lastFocus.focus();
+    }
+
+    // Click triggers
+    document.addEventListener("click", (e) => {
+      const t = e.target as HTMLElement | null;
+      const trigger = t?.closest<HTMLElement>("[data-lightbox-trigger]");
+      if (!trigger) return;
+      e.preventDefault();
+      const group = trigger.dataset.lightboxGroup || "default";
+      const src = trigger.dataset.lightboxSrc || "";
+      open(group, src);
+    });
+
+    // Controls
+    closeBtn.addEventListener("click", close);
+    prevBtn.addEventListener("click", () => show(index - 1));
+    nextBtn.addEventListener("click", () => show(index + 1));
+
+    // Close on background click (but not on figure/buttons)
+    lightbox.addEventListener("click", (e) => {
+      if (e.target === lightbox) close();
+    });
+
+    // Keyboard
+    document.addEventListener("keydown", (e) => {
+      if (lightbox.classList.contains("hidden")) return;
+      if (e.key === "Escape") close();
+      else if (e.key === "ArrowLeft") show(index - 1);
+      else if (e.key === "ArrowRight") show(index + 1);
+    });
+  })();
+</script>

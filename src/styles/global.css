@@ -112,7 +112,3 @@
   background: var(--color-brand-dark);
 }
 
-/* Smooth img loading without layout shift */
-img[loading="lazy"] {
-  background: var(--color-line-soft);
-}

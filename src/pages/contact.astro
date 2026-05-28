@@ -5,41 +5,158 @@ import { site } from "@/data/site";
 ---
 
 <BaseLayout
-  title="Contact — Agence de communication à Orléans, Loiret"
-  description="Contactez Emy, agence de communication cré'active à Orléans. Adresse : 27 rue des Chabassières, 45100 Orléans. Téléphone : 06 70 06 51 59."
+  title="Contact — Demander un devis à Orléans"
+  description={`Contactez Emy Communication à Orléans. ${site.address.street}, ${site.address.zip} ${site.address.city}. Tél. ${site.phone}. Réponse dans un délai de 48h.`}
 >
-  <section class="container-x py-16 md:py-20 text-center">
-    <p class="title-eyebrow">Emy</p>
-    <h1 class="title-section mt-3 !text-3xl md:!text-4xl">
-      Vous avez un projet de communication ?
-    </h1>
-    <p class="mt-5 max-w-2xl mx-auto text-[color:var(--color-ink-muted)] text-lg">
-      Contactez-moi via ce formulaire, je vous recontacterai dans les meilleurs délais.
-    </p>
+  <!-- HERO sombre/teal -->
+  <section class="relative overflow-hidden bg-[#222831] text-white">
+    <!-- Decorative shapes -->
+    <span aria-hidden="true" class="pointer-events-none absolute -right-20 -top-20 w-72 h-72 rounded-full bg-white/8"></span>
+    <span aria-hidden="true" class="pointer-events-none absolute -left-24 bottom-[-6rem] w-64 h-64 rounded-full bg-white/8"></span>
+    <span aria-hidden="true" class="pointer-events-none absolute right-[12%] bottom-4 w-16 h-16 rounded-full bg-white/5"></span>
+    <span aria-hidden="true" class="pointer-events-none absolute left-[18%] top-6 w-10 h-10 rounded-full bg-white/5"></span>
+
+    <div class="container-x py-16 md:py-20 text-center relative">
+      <p class="font-display uppercase tracking-[0.12em] text-xs md:text-sm font-semibold text-white/70" style="font-family:var(--font-display)">
+        Parlons de votre projet
+      </p>
+      <h1 class="font-display uppercase tracking-[0.04em] mt-4 text-3xl md:text-5xl font-extrabold text-[color:var(--color-brand)]" style="font-family:var(--font-display)">
+        Contacter Emy
+      </h1>
+      <p class="mt-5 max-w-2xl mx-auto text-white/80 text-lg leading-relaxed">
+        Une idée, un brief, un appel d'offres ? Échangeons sur vos enjeux —
+        je vous recontacte personnellement dans un délai de 48&nbsp;h.
+      </p>
+    </div>
   </section>
 
-  <section class="container-x pb-12">
-    <div class="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto">
+  <!-- 3 CARDS COLORÉES avec pictos -->
+  <section class="container-x py-16 md:py-20">
+    <div class="grid md:grid-cols-3 gap-5 md:gap-6 max-w-5xl mx-auto">
+      <!-- Téléphone -->
       <a
         href={`tel:${site.phoneE164}`}
-        class="block bg-white border border-[color:var(--color-line)] p-6 text-center hover:border-[color:var(--color-brand)] transition-colors"
+        class="group relative block rounded-2xl p-8 text-white bg-[color:var(--color-brand)] hover:bg-[color:var(--color-brand-dark)] transition-all duration-300 hover:-translate-y-1 hover:shadow-xl overflow-hidden"
       >
-        <p class="title-eyebrow">Téléphone</p>
-        <p class="mt-2 font-semibold text-lg">{site.phone}</p>
+        <div class="absolute -right-6 -top-6 w-32 h-32 rounded-full bg-white/10 group-hover:scale-125 transition-transform duration-500"></div>
+        <div class="relative">
+          <div class="w-14 h-14 rounded-2xl bg-white/15 flex items-center justify-center mb-5">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+            </svg>
+          </div>
+          <p class="font-display uppercase tracking-[0.08em] text-xs font-semibold text-white/80" style="font-family:var(--font-display)">
+            Téléphone
+          </p>
+          <p class="mt-2 text-2xl font-bold leading-tight">{site.phone}</p>
+          <p class="mt-3 text-sm text-white/80 flex items-center gap-1">
+            Appeler maintenant
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="transition-transform group-hover:translate-x-1" aria-hidden="true">
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+          </p>
+        </div>
       </a>
+
+      <!-- Email -->
       <a
         href={`mailto:${site.email}`}
-        class="block bg-white border border-[color:var(--color-line)] p-6 text-center hover:border-[color:var(--color-brand)] transition-colors"
+        class="group relative block rounded-2xl p-8 text-white bg-[#e91e63] hover:bg-[#c2185b] transition-all duration-300 hover:-translate-y-1 hover:shadow-xl overflow-hidden"
       >
-        <p class="title-eyebrow">Email</p>
-        <p class="mt-2 font-semibold text-lg break-all">{site.email}</p>
+        <div class="absolute -right-6 -top-6 w-32 h-32 rounded-full bg-white/10 group-hover:scale-125 transition-transform duration-500"></div>
+        <div class="relative">
+          <div class="w-14 h-14 rounded-2xl bg-white/15 flex items-center justify-center mb-5">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+              <polyline points="22,6 12,13 2,6"></polyline>
+            </svg>
+          </div>
+          <p class="font-display uppercase tracking-[0.08em] text-xs font-semibold text-white/80" style="font-family:var(--font-display)">
+            Email
+          </p>
+          <p class="mt-2 text-lg font-bold leading-tight break-all">{site.email}</p>
+          <p class="mt-3 text-sm text-white/80 flex items-center gap-1">
+            Écrire un message
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="transition-transform group-hover:translate-x-1" aria-hidden="true">
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+          </p>
+        </div>
       </a>
-      <div class="block bg-white border border-[color:var(--color-line)] p-6 text-center">
-        <p class="title-eyebrow">Adresse</p>
-        <p class="mt-2 font-semibold text-lg">{site.address.street}<br />{site.address.zip} {site.address.city}</p>
+
+      <!-- Adresse -->
+      <div class="group relative block rounded-2xl p-8 text-white bg-[#f5b800] hover:bg-[#d99e00] transition-all duration-300 hover:-translate-y-1 hover:shadow-xl overflow-hidden">
+        <div class="absolute -right-6 -top-6 w-32 h-32 rounded-full bg-white/15 group-hover:scale-125 transition-transform duration-500"></div>
+        <div class="relative">
+          <div class="w-14 h-14 rounded-2xl bg-white/20 flex items-center justify-center mb-5">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+              <circle cx="12" cy="10" r="3"></circle>
+            </svg>
+          </div>
+          <p class="font-display uppercase tracking-[0.08em] text-xs font-semibold text-white/90" style="font-family:var(--font-display)">
+            Adresse
+          </p>
+          <p class="mt-2 text-lg font-bold leading-tight">{site.address.street}</p>
+          <p class="text-sm text-white/90 mt-1">{site.address.zip} {site.address.city}</p>
+          <p class="mt-3 text-sm text-white/90">Centre-Val de Loire</p>
+        </div>
       </div>
     </div>
   </section>
 
-  <ContactForm />
+  <!-- BENEFITS BAND -->
+  <section class="bg-[color:var(--color-line-soft)] py-12 md:py-16">
+    <div class="container-x max-w-5xl">
+      <div class="grid md:grid-cols-3 gap-8 md:gap-10 text-center">
+        <div>
+          <div class="w-12 h-12 mx-auto rounded-full bg-[color:var(--color-brand-light)] flex items-center justify-center mb-4">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--color-brand-dark)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+          </div>
+          <h2 class="font-display uppercase tracking-[0.06em] text-sm font-semibold mb-2" style="font-family:var(--font-display)">
+            Réponse dans 48&nbsp;h
+          </h2>
+          <p class="text-sm text-[color:var(--color-ink-muted)] leading-relaxed">
+            Chaque demande est traitée personnellement, sans intermédiaire.
+          </p>
+        </div>
+        <div>
+          <div class="w-12 h-12 mx-auto rounded-full bg-[color:var(--color-brand-light)] flex items-center justify-center mb-4">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--color-brand-dark)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M12 2 15 8.5 22 9.3l-5 4.9 1.2 7.1L12 17.8 5.8 21.3 7 14.2 2 9.3l7-.8L12 2z"></path>
+            </svg>
+          </div>
+          <h2 class="font-display uppercase tracking-[0.06em] text-sm font-semibold mb-2" style="font-family:var(--font-display)">
+            Devis gratuit
+          </h2>
+          <p class="text-sm text-[color:var(--color-ink-muted)] leading-relaxed">
+            Premier échange et estimation sans engagement.
+          </p>
+        </div>
+        <div>
+          <div class="w-12 h-12 mx-auto rounded-full bg-[color:var(--color-brand-light)] flex items-center justify-center mb-4">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--color-brand-dark)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="12" cy="12" r="10"></circle>
+              <polyline points="12 6 12 12 16 14"></polyline>
+            </svg>
+          </div>
+          <h2 class="font-display uppercase tracking-[0.06em] text-sm font-semibold mb-2" style="font-family:var(--font-display)">
+            10&nbsp;ans d'expérience
+          </h2>
+          <p class="text-sm text-[color:var(--color-ink-muted)] leading-relaxed">
+            Centre-Val de Loire & Île-de-France depuis 2015.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <ContactForm
+    title="Décrivez votre projet"
+    intro="Quelques lignes suffisent — je reviens vers vous rapidement pour échanger."
+  />
 </BaseLayout>

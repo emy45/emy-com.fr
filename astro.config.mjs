@@ -5,12 +5,19 @@ import tailwindcss from '@tailwindcss/vite';
 
 export default defineConfig({
   site: 'https://www.emy-com.fr',
+  trailingSlash: 'never',
   output: 'static',
   adapter: vercel({
     imageService: true,
     webAnalytics: { enabled: false },
   }),
-  integrations: [sitemap()],
+  integrations: [
+    sitemap({
+      changefreq: 'monthly',
+      priority: 0.7,
+      lastmod: new Date(),
+    }),
+  ],
   vite: {
     plugins: [tailwindcss()],
   },

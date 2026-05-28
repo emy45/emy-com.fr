@@ -3,51 +3,104 @@ import type { CaseStudy } from "@/data/realisations";
 import Picture from "@/components/Picture.astro";
 interface Props {
   data: CaseStudy;
-  reverse?: boolean;
+  index?: number;
 }
-const { data } = Astro.props;
+const { data, index = 0 } = Astro.props;
+const groupId = `case-${index}`;
+
+// Adapt grid columns and wrapper width to the number of images so they stay centered.
+const n = data.images.length;
+const gridClasses =
+  n === 1
+    ? "grid grid-cols-1 max-w-md mx-auto"
+    : n === 2
+    ? "grid grid-cols-1 sm:grid-cols-2 max-w-3xl mx-auto"
+    : n === 3
+    ? "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 max-w-5xl mx-auto"
+    : n === 4
+    ? "grid grid-cols-2 max-w-4xl mx-auto"
+    : n <= 6
+    ? "grid grid-cols-2 sm:grid-cols-3 max-w-5xl mx-auto"
+    : "grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 mx-auto";
 ---
 
-<article class="py-12 border-b border-[color:var(--color-line)] last:border-b-0">
-  <header class="mb-6">
-    <h3 class="title-section !text-2xl md:!text-3xl">{data.client}</h3>
+<article class="py-12 md:py-16 border-b border-[color:var(--color-line)] last:border-b-0">
+  <!-- Centered header with strong client name accent -->
+  <header class="max-w-3xl mx-auto text-center mb-10">
+    {data.category && (
+      <p class="inline-flex items-center px-3 py-1 rounded-full bg-[color:var(--color-brand-light)] text-[color:var(--color-brand-dark)] text-xs font-bold uppercase tracking-[0.08em]" style="font-family:var(--font-display)">
+        {data.category}
+      </p>
+    )}
+    <h2 class="font-display uppercase tracking-[0.02em] mt-4 text-2xl md:text-3xl font-extrabold text-[color:var(--color-ink)] leading-[1.05]" style="font-family:var(--font-display)">
+      {data.client}
+    </h2>
+    <span aria-hidden="true" class="block mx-auto mt-4 h-1 w-16 rounded-full bg-[color:var(--color-brand)]"></span>
     {data.subtitle && (
-      <p class="mt-1 text-[color:var(--color-ink-muted)] italic">{data.subtitle}</p>
+      <p class="mt-4 text-[color:var(--color-ink-muted)] italic text-base md:text-lg">{data.subtitle}</p>
+    )}
+    <p class="mt-5 text-[color:var(--color-ink-muted)] leading-relaxed">
+      {data.objective}
+    </p>
+    {data.creations.length > 0 && (
+      <ul class="mt-5 flex flex-wrap items-center justify-center gap-2">
+        {data.creations.map((c) => (
+          <li class="inline-flex items-center px-3 py-1 rounded-full bg-white border border-[color:var(--color-line)] text-[color:var(--color-ink-muted)] text-xs font-semibold whitespace-nowrap" style="font-family:var(--font-display)">
+            {c}
+          </li>
+        ))}
+      </ul>
     )}
   </header>
 
-  <div class="grid md:grid-cols-3 gap-8 mb-8">
-    <div>
-      <p class="title-eyebrow mb-2">Objectif</p>
-      <p class="text-[color:var(--color-ink-muted)] leading-relaxed">{data.objective}</p>
-    </div>
-    <div>
-      <p class="title-eyebrow mb-2">Créations</p>
-      <ul class="space-y-1.5 text-[color:var(--color-ink-muted)]">
-        {data.creations.map((c) => (
-          <li class="flex gap-2"><span class="text-[color:var(--color-brand)] mt-1.5 w-1.5 h-1.5 rounded-full bg-[color:var(--color-brand)] shrink-0"></span><span>{c}</span></li>
-        ))}
-      </ul>
-    </div>
-    {data.category && (
-      <div>
-        <p class="title-eyebrow mb-2">Catégorie</p>
-        <p class="text-[color:var(--color-ink-muted)]">{data.category}</p>
-      </div>
-    )}
-  </div>
-
+  <!-- Compact uniform grid: cols adapt to image count, square tiles, lightbox on click -->
   {data.images.length > 0 && (
-    <ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-      {data.images.map((img) => (
-        <li class="bg-[color:var(--color-line-soft)] overflow-hidden">
-          <Picture
-            src={img.src}
-            alt={img.alt}
-            class="w-full h-auto"
-          />
-        </li>
-      ))}
+    <ul class={`${gridClasses} gap-3 md:gap-4`}>
+      {data.images.map((img) => {
+        const host = img.href ? img.href.replace(/^https?:\/\//, "").replace(/\/$/, "") : null;
+        return (
+          <li>
+            {img.href ? (
+              <a
+                href={img.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="group relative block w-full aspect-[16/10] rounded-xl overflow-hidden bg-white ring-1 ring-[color:var(--color-line)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--color-brand)] focus-visible:ring-offset-2 transition-transform duration-200 hover:-translate-y-0.5 hover:shadow-md"
+                aria-label={`Ouvrir le site ${host} (nouvel onglet)`}
+              >
+                <Picture
+                  src={img.src}
+                  alt={img.alt}
+                  class="w-full h-full object-cover object-top"
+                />
+                <div class="absolute inset-x-0 bottom-0 px-3 py-2.5 bg-gradient-to-t from-black/85 via-black/55 to-transparent text-white flex items-center justify-between gap-2">
+                  <span class="text-sm font-semibold truncate" style="font-family:var(--font-display)">{host}</span>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="shrink-0 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" aria-hidden="true">
+                    <path d="M7 17 17 7"></path>
+                    <path d="M7 7h10v10"></path>
+                  </svg>
+                </div>
+              </a>
+            ) : (
+              <button
+                type="button"
+                class="block w-full aspect-[4/3] rounded-xl overflow-hidden bg-[color:var(--color-line-soft)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--color-brand)] focus-visible:ring-offset-2 cursor-zoom-in transition-transform duration-200 hover:-translate-y-0.5 hover:shadow-md"
+                data-lightbox-trigger
+                data-lightbox-group={groupId}
+                data-lightbox-src={img.src.replace(/\.(png|jpe?g)$/i, ".webp")}
+                data-lightbox-alt={img.alt}
+                aria-label={`Agrandir : ${img.alt}`}
+              >
+                <Picture
+                  src={img.src}
+                  alt={img.alt}
+                  class="w-full h-full object-cover"
+                />
+              </button>
+            )}
+          </li>
+        );
+      })}
     </ul>
   )}
 </article>

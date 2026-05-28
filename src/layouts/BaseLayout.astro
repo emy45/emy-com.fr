@@ -2,6 +2,7 @@
 import "@/styles/global.css";
 import Header from "@/components/Header.astro";
 import Footer from "@/components/Footer.astro";
+import CookieConsent from "@/components/CookieConsent.astro";
 import { site } from "@/data/site";
 
 interface Props {
@@ -9,13 +10,15 @@ interface Props {
   description?: string;
   ogImage?: string;
   noindex?: boolean;
+  preloadImage?: string;
 }
 
 const {
   title,
   description = site.description,
-  ogImage = "/images/logo_emy.png",
+  ogImage = "/og-image.jpg",
   noindex = false,
+  preloadImage,
 } = Astro.props;
 
 const canonical = new URL(Astro.url.pathname, Astro.site ?? site.url).toString();
@@ -36,13 +39,31 @@ const fullTitle = title === site.siteName ? title : `${title} | ${site.siteName}
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="fr_FR" />
     <meta property="og:site_name" content={site.siteName} />
-    <meta property="og:title" content={fullTitle} />
+    <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
     <meta property="og:image" content={new URL(ogImage, site.url).toString()} />
-    <meta name="twitter:card" content="summary" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={description} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={new URL(ogImage, site.url).toString()} />
 
-    <link rel="icon" type="image/png" href="/images/logo_emy.png" />
+    <meta name="author" content="Emy Communication" />
+    <meta name="geo.region" content="FR-45" />
+    <meta name="geo.placename" content="Saint-Jean-le-Blanc, Orléans" />
+    <meta name="geo.position" content="47.876130;1.927840" />
+    <meta name="ICBM" content="47.876130, 1.927840" />
+
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+
+    {preloadImage && (
+      <link rel="preload" as="image" href={preloadImage} fetchpriority="high" />
+    )}
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -60,20 +81,63 @@ const fullTitle = title === site.siteName ? title : `${title} | ${site.siteName}
       type="application/ld+json"
       set:html={JSON.stringify({
         "@context": "https://schema.org",
-        "@type": "Organization",
-        name: site.siteName,
+        "@type": "ProfessionalService",
+        "@id": `${site.url}/#organization`,
+        name: site.name,
+        alternateName: site.siteName,
+        description: site.description,
         url: site.url,
         logo: new URL("/images/logo_emy.png", site.url).toString(),
+        image: new URL("/images/emy_sphere.webp", site.url).toString(),
         telephone: site.phoneE164,
         email: site.email,
+        priceRange: "€€",
+        foundingDate: "2015",
+        founder: {
+          "@type": "Person",
+          name: site.legal.publicationDirector,
+        },
         address: {
           "@type": "PostalAddress",
           streetAddress: site.address.street,
           postalCode: site.address.zip,
           addressLocality: site.address.city,
+          addressRegion: "Centre-Val de Loire",
           addressCountry: "FR",
         },
-        sameAs: [site.social.facebook, site.social.instagram],
+        geo: {
+          "@type": "GeoCoordinates",
+          latitude: 47.876130,
+          longitude: 1.927840,
+        },
+        areaServed: [
+          { "@type": "AdministrativeArea", name: "Centre-Val de Loire" },
+          { "@type": "AdministrativeArea", name: "Île-de-France" },
+          { "@type": "City", name: "Orléans" },
+          { "@type": "City", name: "Saint-Jean-le-Blanc" },
+        ],
+        openingHoursSpecification: [
+          {
+            "@type": "OpeningHoursSpecification",
+            dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+            opens: "09:00",
+            closes: "18:00",
+          },
+        ],
+        sameAs: [site.social.facebook, site.social.instagram, site.social.linkedin],
+      })}
+    />
+
+    <script
+      type="application/ld+json"
+      set:html={JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "@id": `${site.url}/#website`,
+        url: site.url,
+        name: site.siteName,
+        inLanguage: "fr-FR",
+        publisher: { "@id": `${site.url}/#organization` },
       })}
     />
   </head>
@@ -86,6 +150,25 @@ const fullTitle = title === site.siteName ? title : `${title} | ${site.siteName}
       <slot />
     </main>
     <Footer />
+
+    <!-- Floating call-to-call button -->
+    <a
+      href={`tel:${site.phoneE164}`}
+      class="fab-call group fixed bottom-6 right-6 z-40 inline-flex items-center gap-3 px-4 py-3 rounded-full bg-[color:var(--color-brand)] text-white shadow-lg hover:bg-[color:var(--color-brand-dark)] hover:shadow-xl transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[color:var(--color-brand)]"
+      aria-label={`Appeler Emy au ${site.phone}`}
+    >
+      <span class="relative inline-flex w-6 h-6 items-center justify-center">
+        <span aria-hidden="true" class="absolute inset-0 rounded-full bg-white/30 animate-ping"></span>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="relative">
+          <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+        </svg>
+      </span>
+      <span class="hidden sm:inline font-semibold text-sm whitespace-nowrap" style="font-family:var(--font-display)">
+        {site.phone}
+      </span>
+    </a>
+
+    <CookieConsent />
   </body>
 </html>
 

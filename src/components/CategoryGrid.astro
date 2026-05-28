@@ -1,33 +1,73 @@
 ---
 import { categories } from "@/data/realisations";
 import Picture from "@/components/Picture.astro";
+
+// CMJ palette: Cyan (teal), Magenta, Jaune
+const palette = [
+  { bg: "bg-[color:var(--color-brand)]" },
+  { bg: "bg-[#e91e63]" },
+  { bg: "bg-[#f5b800]" },
+];
+
+// Icon per category (SVG paths) — fallback to a generic star
+const icons: Record<string, string> = {
+  "chartes-graphiques":
+    'M15 4l5 5-11 11H4v-5z M13 6l5 5 M20 4l1 1',
+  "campagnes-affichage":
+    'M3 5h18v10H3z M7 21h10 M12 17v4',
+  plaquettes:
+    'M4 19.5A2.5 2.5 0 0 1 6.5 17H20V3H6.5A2.5 2.5 0 0 0 4 5.5z M4 19.5A2.5 2.5 0 0 0 6.5 22H20',
+  "kit-entrepreneur":
+    'M6 2v6 M18 2v6 M3 8h18v13H3z',
+  "sites-web":
+    'M2 12a10 10 0 1 0 20 0 10 10 0 0 0-20 0z M2 12h20 M12 2a15 15 0 0 1 4 10 15 15 0 0 1-4 10 M12 2a15 15 0 0 0-4 10 15 15 0 0 0 4 10',
+  signaletique:
+    'M12 2v20 M5 5h7l-2 3 2 3H5z M19 13h-7l2 3-2 3h7z',
+  edition:
+    'M4 19.5A2.5 2.5 0 0 1 6.5 17H20V3H6.5A2.5 2.5 0 0 0 4 5.5z M4 19.5A2.5 2.5 0 0 0 6.5 22H20 M9 7h6 M9 11h6',
+  "objets-publicitaires":
+    'M8 2v4 M16 2v4 M3 10h18 M5 6h14v15H5z',
+};
 ---
 
-<ul class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
-  {categories.map((cat) => (
-    <li>
-      <a
-        href={cat.href}
-        class="group block relative overflow-hidden aspect-square bg-[color:var(--color-line-soft)] focus:outline-none"
-        aria-label={`Voir les réalisations : ${cat.title}`}
-      >
-        <Picture
-          src={cat.thumb}
-          alt={cat.thumbAlt}
-          width={400}
-          height={400}
-          class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-        />
-        <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent opacity-90 group-hover:from-[color:var(--color-brand)]/85 transition-colors"></div>
-        <div class="absolute inset-x-0 bottom-0 p-4 md:p-5 text-white">
-          <p class="text-[10px] md:text-xs uppercase tracking-[0.12em] opacity-90" style="font-family:var(--font-display)">
-            {cat.eyebrow}
-          </p>
-          <p class="mt-1 text-sm md:text-base font-semibold uppercase tracking-[0.04em]" style="font-family:var(--font-display)">
-            {cat.title}
-          </p>
-        </div>
-      </a>
-    </li>
-  ))}
+<ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
+  {categories.map((cat, i) => {
+    const color = palette[i % palette.length];
+    const iconPath = icons[cat.slug];
+    return (
+      <li>
+        <a
+          href={cat.href}
+          class="group block overflow-hidden rounded-2xl shadow-sm transition-transform duration-300 hover:-translate-y-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--color-brand)] focus-visible:ring-offset-4 focus-visible:ring-offset-[#222831]"
+          aria-label={`Voir les réalisations : ${cat.title}`}
+        >
+          <!-- Custom colored header (alternates CMJ) — fixed height for uniform cards -->
+          <div class={`${color.bg} px-4 py-3 h-16 flex items-center justify-center gap-3 text-white text-center`}>
+            {iconPath && (
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="shrink-0">
+                {iconPath.split(" M").map((seg, idx) => (
+                  <path d={idx === 0 ? seg : "M" + seg}></path>
+                ))}
+              </svg>
+            )}
+            <span class="font-display uppercase tracking-[0.04em] text-sm md:text-base font-bold leading-tight" style="font-family:var(--font-display)">
+              {cat.title}
+            </span>
+          </div>
+          <!-- Image body — original PNG clipped to hide its built-in teal header -->
+          <div class="relative overflow-hidden bg-[color:var(--color-line-soft)] aspect-[422/240]">
+            <img
+              src={cat.thumb.replace(/\.(png|jpe?g)$/i, ".webp")}
+              alt={cat.thumbAlt}
+              width="422"
+              height="355"
+              loading="lazy"
+              decoding="async"
+              class="absolute inset-x-0 bottom-0 w-full h-auto"
+            />
+          </div>
+        </a>
+      </li>
+    );
+  })}
 </ul>

@@ -74,7 +74,7 @@ export const categories: Category[] = [
   },
 ];
 
-export type CaseImage = { src: string; alt: string };
+export type CaseImage = { src: string; alt: string; href?: string };
 
 export type CaseStudy = {
   client: string;
@@ -95,8 +95,8 @@ export const cases: Record<string, CaseStudy[]> = {
       creations: ["Logotype", "Charte graphique", "Déclinaison par département"],
       category: "Marque",
       images: [
-        { src: "/images/Capture-decran-2023-01-05-a-13.33.46.png", alt: "Logo ARFAB" },
-        { src: "/images/Capture-decran-2023-01-05-a-13.31.24.png", alt: "Charte graphique ARFAB" },
+        { src: "/images/chartes-graphiques-arfab-logo.png", alt: "Logo ARFAB" },
+        { src: "/images/chartes-graphiques-arfab-charte-graphique.png", alt: "Charte graphique ARFAB" },
       ],
     },
     {
@@ -107,9 +107,9 @@ export const cases: Record<string, CaseStudy[]> = {
       creations: ["Identité de marque", "Sémiologie", "Déclinaison sur supports"],
       category: "Marque",
       images: [
-        { src: "/images/Capture-decran-2023-01-05-a-13.48.57.png", alt: "Logo CYKLEO" },
-        { src: "/images/Capture-decran-2023-01-05-a-13.50.27.png", alt: "Sémiologie attendue CYKLEO" },
-        { src: "/images/Capture-decran-2023-01-05-a-13.45.44.png", alt: "Annonce presse CYKLEO" },
+        { src: "/images/chartes-graphiques-cykleo-logo.png", alt: "Logo CYKLEO" },
+        { src: "/images/chartes-graphiques-cykleo-semiologie-attendue.png", alt: "Sémiologie attendue CYKLEO" },
+        { src: "/images/chartes-graphiques-cykleo-annonce-presse.png", alt: "Annonce presse CYKLEO" },
       ],
     },
     {
@@ -120,10 +120,10 @@ export const cases: Record<string, CaseStudy[]> = {
       creations: ["Logotype", "Charte graphique", "Papier en-tête", "Carte de visite"],
       category: "Marque",
       images: [
-        { src: "/images/Capture-decran-2023-01-05-a-13.54.30.png", alt: "Logo COF" },
-        { src: "/images/Capture-decran-2023-01-05-a-14.00.44.png", alt: "Têtes de lettres COF" },
-        { src: "/images/Capture-decran-2023-01-05-a-13.54.43.png", alt: "Charte graphique COF" },
-        { src: "/images/Capture-decran-2023-01-05-a-13.57.15.png", alt: "Charte couleurs COF" },
+        { src: "/images/chartes-graphiques-cof-logo.png", alt: "Logo COF" },
+        { src: "/images/chartes-graphiques-cof-tetes-de-lettres.png", alt: "Têtes de lettres COF" },
+        { src: "/images/chartes-graphiques-cof-charte-graphique.png", alt: "Charte graphique COF" },
+        { src: "/images/chartes-graphiques-cof-charte-couleurs.png", alt: "Charte couleurs COF" },
       ],
     },
   ],
@@ -140,11 +140,12 @@ export const cases: Record<string, CaseStudy[]> = {
       ],
       category: "Marque",
       images: [
-        { src: "/images/Capture-decran-2023-01-05-a-14.18.08.png", alt: "Affiche « Pour ma liberté » VÉLO+" },
-        { src: "/images/Capture-decran-2023-01-05-a-14.18.28.png", alt: "Affiche « Pour ma planète » VÉLO+" },
-        { src: "/images/Capture-decran-2023-01-05-a-14.18.44.png", alt: "Affiche « Pour mon style » VÉLO+" },
-        { src: "/images/Capture-decran-2023-01-05-a-14.14.12.png", alt: "Affichage VÉLO+ 2018" },
-        { src: "/images/Capture-decran-2023-01-05-a-14.25.14.png", alt: "Guide d'utilisation VÉLO+" },
+        { src: "/images/campagnes-affichage-velo-affiche-pour-ma-liberte.png", alt: "Affiche « Pour ma liberté » VÉLO+" },
+        { src: "/images/campagnes-affichage-velo-affiche-pour-ma-planete.png", alt: "Affiche « Pour ma planète » VÉLO+" },
+        { src: "/images/campagnes-affichage-velo-affiche-pour-mon-style.png", alt: "Affiche « Pour mon style » VÉLO+" },
+        { src: "/images/campagnes-affichage-velo-affichage-2018.png", alt: "Affichage VÉLO+ 2018" },
+        { src: "/images/campagnes-affichage-velo-guide-dutilisation.png", alt: "Guide d'utilisation VÉLO+" },
+        { src: "/images/campagnes-affichage-velo-guide-dutilisation-interieur.png", alt: "Guide d'utilisation VÉLO+ — intérieur" },
       ],
     },
     {
@@ -160,8 +161,20 @@ export const cases: Record<string, CaseStudy[]> = {
       category: "Communication de recrutement",
       images: [
         {
-          src: "/images/Capture-decran-2023-01-05-a-14.32.09.png",
+          src: "/images/campagnes-affichage-groupe-partnaire-engages-pour-lemploi-candidats-partnaire.png",
           alt: "Engagés pour l'emploi — candidats Partnaire intérim",
+        },
+        {
+          src: "/images/campagnes-affichage-groupe-partnaire-campagne-partnaire-declinaison.png",
+          alt: "Campagne Partnaire — déclinaison",
+        },
+        {
+          src: "/images/campagnes-affichage-groupe-partnaire-campagne-partnaire-affichage-abribus.png",
+          alt: "Campagne Partnaire — affichage Abribus",
+        },
+        {
+          src: "/images/campagnes-affichage-groupe-partnaire-campagne-partnaire-affichage-zenith.png",
+          alt: "Campagne Partnaire — affichage Zénith",
         },
       ],
     },
@@ -178,7 +191,7 @@ export const cases: Record<string, CaseStudy[]> = {
       category: "Communication commerciale",
       images: [
         {
-          src: "/images/Capture-decran-2023-01-05-a-14.39.39.png",
+          src: "/images/campagnes-affichage-sodimavi-operation-commerciale-isuzu.png",
           alt: "Opération commerciale ISUZU SODIMAVI",
         },
       ],
@@ -196,7 +209,11 @@ export const cases: Record<string, CaseStudy[]> = {
         "Reportage photos",
       ],
       category: "Communication commerciale",
-      images: [],
+      images: [
+        { src: "/images/plaquettes-lte-plaquette-couverture.png", alt: "Plaquette LTE — couverture" },
+        { src: "/images/plaquettes-lte-plaquette-fiches-activites.png", alt: "Plaquette LTE — fiches activités" },
+        { src: "/images/plaquettes-lte-plaquette-interieur.png", alt: "Plaquette LTE — intérieur" },
+      ],
     },
     {
       client: "DÉBARRAS PRO SERVICES",
@@ -208,7 +225,11 @@ export const cases: Record<string, CaseStudy[]> = {
         "4 fiches dédiées par activité",
       ],
       category: "Communication commerciale",
-      images: [],
+      images: [
+        { src: "/images/plaquettes-debarras-pro-services-plaquette-couverture.png", alt: "Plaquette Débarras Pro Services — couverture" },
+        { src: "/images/plaquettes-debarras-pro-services-plaquette-fiches-activites.png", alt: "Plaquette Débarras Pro Services — fiches activités" },
+        { src: "/images/plaquettes-debarras-pro-services-plaquette-interieur.png", alt: "Plaquette Débarras Pro Services — intérieur" },
+      ],
     },
     {
       client: "BRUMEXPERT",
@@ -221,7 +242,11 @@ export const cases: Record<string, CaseStudy[]> = {
         "Intégration des produits sur Internet",
       ],
       category: "Communication produit",
-      images: [],
+      images: [
+        { src: "/images/plaquettes-brumexpert-catalogue-couverture.png", alt: "Catalogue Brumexpert — couverture" },
+        { src: "/images/plaquettes-brumexpert-catalogue-gamme-produits.png", alt: "Catalogue Brumexpert — gamme produits" },
+        { src: "/images/plaquettes-brumexpert-catalogue-pages-produits.png", alt: "Catalogue Brumexpert — pages produits" },
+      ],
     },
     {
       client: "BRUMIFRAIS",
@@ -235,7 +260,11 @@ export const cases: Record<string, CaseStudy[]> = {
         "Stratégie digitale",
       ],
       category: "Communication commerciale",
-      images: [],
+      images: [
+        { src: "/images/plaquettes-brumifrais-plaquette-couverture.png", alt: "Plaquette Brumifrais — couverture" },
+        { src: "/images/plaquettes-brumifrais-plaquette-fiches-thematiques.png", alt: "Plaquette Brumifrais — fiches thématiques" },
+        { src: "/images/plaquettes-brumifrais-plaquette-interieur.png", alt: "Plaquette Brumifrais — intérieur" },
+      ],
     },
     {
       client: "YVES OLLIVIER",
@@ -248,7 +277,10 @@ export const cases: Record<string, CaseStudy[]> = {
         "Stratégie digitale",
       ],
       category: "Communication commerciale",
-      images: [],
+      images: [
+        { src: "/images/plaquettes-yves-ollivier-plaquette-couverture.png", alt: "Plaquette Yves Ollivier — couverture" },
+        { src: "/images/plaquettes-yves-ollivier-plaquette-interieur.png", alt: "Plaquette Yves Ollivier — intérieur" },
+      ],
     },
     {
       client: "FRICOM",
@@ -261,7 +293,10 @@ export const cases: Record<string, CaseStudy[]> = {
         "Création des infographies",
       ],
       category: "Communication commerciale",
-      images: [],
+      images: [
+        { src: "/images/plaquettes-fricom-plaquette-ecotel-couverture.png", alt: "Plaquette Fricom / Ecotel — couverture" },
+        { src: "/images/plaquettes-fricom-plaquette-ecotel-interieur.png", alt: "Plaquette Fricom / Ecotel — intérieur" },
+      ],
     },
   ],
 
@@ -280,10 +315,10 @@ export const cases: Record<string, CaseStudy[]> = {
       category: "Print & web",
       images: [
         { src: "/images/plaquette_caroline_leger1-1.png", alt: "Plaquette Caroline Leger" },
-        { src: "/images/Capture-decran-2023-01-05-a-10.48.50.png", alt: "Carte de visite Caroline Leger" },
-        { src: "/images/Capture-decran-2023-01-05-a-10.50.17.png", alt: "Suivez vos rêves — Caroline Leger" },
+        { src: "/images/kit-entrepreneur-caroline-leger-carte-de-visite.png", alt: "Carte de visite Caroline Leger" },
+        { src: "/images/kit-entrepreneur-caroline-leger-suivez-vos-reves.png", alt: "Suivez vos rêves — Caroline Leger" },
         {
-          src: "/images/Capture-decran-2023-01-05-a-10.49.59.png",
+          src: "/images/kit-entrepreneur-caroline-leger-si-je-lecris-ca-prend.png",
           alt: "Si je l'écris ça prend vie — Caroline Leger",
         },
         { src: "/images/site_web_caroline-1.png", alt: "Site web Caroline Leger" },
@@ -304,10 +339,36 @@ export const cases: Record<string, CaseStudy[]> = {
       ],
       category: "Digital",
       images: [
-        { src: "/images/site_web_caroline-1.png", alt: "Site web Caroline Leger" },
-        { src: "/images/site_web_Brumexpert.png", alt: "Site web Brumexpert" },
-        { src: "/images/site_web_yves_ollivier.png", alt: "Site web Yves Ollivier" },
-        { src: "/images/site_web_lte.png", alt: "Site web LTE" },
+        {
+          src: "/images/site_web_vdlvi.png",
+          alt: "Site web VDLVI — Vins de Loire — Vins d'Ici",
+          href: "https://vdlvi.fr",
+        },
+        {
+          src: "/images/site_web_anpneus.png",
+          alt: "Site web ANPneus — vente et montage de pneus",
+          href: "https://anpneus.fr",
+        },
+        {
+          src: "/images/site_web_sodimavi.png",
+          alt: "Site web Sodimavi — agent distributeur VOLVO / KÖGEL / ISUZU / DAF",
+          href: "https://www.sodimavi.com",
+        },
+        {
+          src: "/images/site_web_lte.png",
+          alt: "Site web LT-E — Le Tellier Emballages",
+          href: "https://www.lt-e.fr",
+        },
+        {
+          src: "/images/site_web_yves_ollivier.png",
+          alt: "Site web Yves Ollivier — aménageur d'espaces de travail",
+          href: "https://www.yvesollivier.com",
+        },
+        {
+          src: "/images/site_web_caroline-1.png",
+          alt: "Site web Caroline Léger — graphothérapeute",
+          href: "https://caroline-leger.fr",
+        },
       ],
     },
   ],
@@ -320,9 +381,7 @@ export const cases: Record<string, CaseStudy[]> = {
       creations: ["Création du stand parapluie", "Création de deux roll-up"],
       category: "Communication de recrutement",
       images: [
-        { src: "/images/Capture-decran-2023-01-09-a-11.31.03.png", alt: "Stand parapluie Shiseido" },
-        { src: "/images/Capture-decran-2023-01-09-a-11.03.42.png", alt: "Roll-up Shiseido" },
-        { src: "/images/Capture-decran-2023-01-09-a-11.03.54.png", alt: "Stand Shiseido" },
+        { src: "/images/signaletique-shiseido-stand-parapluie.png", alt: "Stand parapluie Shiseido" },
       ],
     },
     {
@@ -337,8 +396,10 @@ export const cases: Record<string, CaseStudy[]> = {
         "Signalétique magasin et PLV",
       ],
       images: [
-        { src: "/images/Capture-decran-2023-01-09-a-11.07.27.png", alt: "Boutique La Mesure Chécy" },
-        { src: "/images/Capture-decran-2023-01-09-a-11.07.08.png", alt: "Boutique La Mesure" },
+        { src: "/images/signaletique-la-mesure-boutique-checy.png", alt: "Boutique La Mesure Chécy" },
+        { src: "/images/signaletique-la-mesure-boutique.png", alt: "Boutique La Mesure" },
+        { src: "/images/signaletique-la-mesure-signaletique-interieur.png", alt: "Signalétique La Mesure — intérieur" },
+        { src: "/images/signaletique-la-mesure-signaletique-vitrine.png", alt: "Signalétique La Mesure — vitrine" },
       ],
     },
     {
@@ -350,7 +411,7 @@ export const cases: Record<string, CaseStudy[]> = {
       category: "Communication institutionnelle",
       images: [
         { src: "/images/marquage_tracteur_cst_jerouleaugaz.png", alt: "Marquage tracteur CST « Je roule au gaz »" },
-        { src: "/images/Capture-decran-2023-01-09-a-11.52.04.png", alt: "Éléments vectoriels de marquage CST" },
+        { src: "/images/signaletique-cst-elements-vectoriels-de-marquage.png", alt: "Éléments vectoriels de marquage CST" },
       ],
     },
   ],
@@ -369,10 +430,10 @@ export const cases: Record<string, CaseStudy[]> = {
       ],
       category: "Communication interne",
       images: [
-        { src: "/images/Capture-decran-2023-01-10-a-15.38.10.png", alt: "Journal interne SIF News Shiseido" },
-        { src: "/images/Capture-decran-2023-01-10-a-15.38.48.png", alt: "So News Shiseido" },
-        { src: "/images/Capture-decran-2023-01-10-a-15.52.16.png", alt: "So News 2019" },
-        { src: "/images/Capture-decran-2023-01-10-a-15.48.16.png", alt: "So News numéro 45" },
+        { src: "/images/edition-shiseido-journal-interne-sif-news.png", alt: "Journal interne SIF News Shiseido" },
+        { src: "/images/edition-shiseido-so-news.png", alt: "So News Shiseido" },
+        { src: "/images/edition-shiseido-so-news-2019.png", alt: "So News 2019" },
+        { src: "/images/edition-shiseido-so-news-numero-45.png", alt: "So News numéro 45" },
       ],
     },
     {
@@ -389,10 +450,10 @@ export const cases: Record<string, CaseStudy[]> = {
       ],
       category: "Communication interne",
       images: [
-        { src: "/images/Capture-decran-2023-01-10-a-16.01.49.png", alt: "Livret d'accueil Sodimavi" },
-        { src: "/images/Capture-decran-2023-01-10-a-16.00.30.png", alt: "Livret d'accueil Sodimavi — page métier" },
+        { src: "/images/edition-sodimavi-livret-daccueil.png", alt: "Livret d'accueil Sodimavi" },
+        { src: "/images/edition-sodimavi-livret-daccueil-page-metier.png", alt: "Livret d'accueil Sodimavi — page métier" },
         {
-          src: "/images/Capture-decran-2023-01-10-a-16.03.24.png",
+          src: "/images/edition-sodimavi-livret-daccueil-intercalaire.png",
           alt: "Livret d'accueil Sodimavi — intercalaire",
         },
       ],
@@ -412,8 +473,8 @@ export const cases: Record<string, CaseStudy[]> = {
       ],
       category: "Objets publicitaires",
       images: [
-        { src: "/images/Capture-decran-2023-01-09-a-14.48.37.png", alt: "Calendriers Sodimavi 2023" },
-        { src: "/images/Capture-decran-2023-01-10-a-16.15.31.png", alt: "Sous-mains Sodimavi 2023" },
+        { src: "/images/objets-publicitaires-sodimavi-calendriers-2023.png", alt: "Calendriers Sodimavi 2023" },
+        { src: "/images/objets-publicitaires-sodimavi-sous-mains-2023.png", alt: "Sous-mains Sodimavi 2023" },
       ],
     },
     {
@@ -422,7 +483,7 @@ export const cases: Record<string, CaseStudy[]> = {
       objective: "Création des calendriers 2023.",
       creations: ["Visuel calendrier", "Suivi de fabrication"],
       category: "Objets publicitaires",
-      images: [{ src: "/images/Capture-decran-2023-01-09-a-14.49.05.png", alt: "Calendrier CST 2023" }],
+      images: [{ src: "/images/objets-publicitaires-cst-calendrier-2023.png", alt: "Calendrier CST 2023" }],
     },
     {
       client: "GL DÉPANNAGE",
@@ -431,7 +492,7 @@ export const cases: Record<string, CaseStudy[]> = {
       objective: "Création du calendrier 2023.",
       creations: ["Visuel calendrier", "Suivi de fabrication"],
       category: "Objets publicitaires",
-      images: [{ src: "/images/Capture-decran-2023-01-09-a-14.49.26.png", alt: "Calendrier 2023 GL Dépannage" }],
+      images: [{ src: "/images/objets-publicitaires-gl-depannage-calendrier-2023.png", alt: "Calendrier 2023 GL Dépannage" }],
     },
   ],
 };

@@ -2,16 +2,17 @@
 import Picture from "@/components/Picture.astro";
 interface Props {
   icon: string;
+  iconAlt?: string;
   title: string;
   text: string;
 }
-const { icon, title, text } = Astro.props;
+const { icon, iconAlt, title, text } = Astro.props;
 ---
 
 <article class="flex flex-col items-center text-center px-2 py-6">
   <Picture
     src={icon}
-    alt=""
+    alt={iconAlt ?? `Formule ${title} — Emy Communication`}
     width={180}
     height={180}
     class="h-32 w-auto mb-5"

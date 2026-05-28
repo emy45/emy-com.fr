@@ -2,7 +2,9 @@
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import CaseStudy from "@/components/CaseStudy.astro";
 import ContactForm from "@/components/ContactForm.astro";
+import Lightbox from "@/components/Lightbox.astro";
 import { cases, categories } from "@/data/realisations";
+import { site } from "@/data/site";
 
 interface Props {
   slug: string;
@@ -22,18 +24,52 @@ const resolvedTitle = title ?? category?.title ?? slug;
 const resolvedPageTitle = pageTitle ?? `${resolvedTitle} — Réalisations`;
 const resolvedDescription =
   description ??
-  `Découvrez les réalisations Emy Communication dans la catégorie ${resolvedTitle.toLowerCase()} : projets sur-mesure pour des marques en Centre-Val de Loire et Île-de-France.`;
+  `Réalisations Emy Communication — ${resolvedTitle.toLowerCase()} : projets sur-mesure à Orléans (Centre-Val de Loire & IDF).`;
+
+// CMJ palette, matching the order of categories on /realisations and /emy grids.
+// Each hero gets the same color as its CategoryGrid card.
+const palette = [
+  { bg: "bg-[color:var(--color-brand)]", text: "text-white", eyebrow: "text-white/80", intro: "text-white/85", title: "text-white", shape: "bg-white/15", shapeAlt: "bg-white/8" }, // Cyan
+  { bg: "bg-[#e91e63]", text: "text-white", eyebrow: "text-white/80", intro: "text-white/85", title: "text-white", shape: "bg-white/15", shapeAlt: "bg-white/8" }, // Magenta
+  { bg: "bg-[#f5b800]", text: "text-[#1a1f26]", eyebrow: "text-[#1a1f26]", intro: "text-[#1a1f26]", title: "text-[#1a1f26]", shape: "bg-white/30", shapeAlt: "bg-[#1a1f26]/15" }, // Jaune
+];
+const categoryIndex = categories.findIndex((c) => c.slug === slug);
+const color = palette[(categoryIndex >= 0 ? categoryIndex : 0) % palette.length];
 ---
 
 <BaseLayout title={resolvedPageTitle} description={resolvedDescription}>
-  <section class="container-x py-14 md:py-20 text-center">
-    <p class="title-eyebrow">{eyebrow}</p>
-    <h1 class="title-section mt-3 !text-3xl md:!text-4xl">{resolvedTitle}</h1>
-    {intro && (
-      <p class="mt-5 max-w-2xl mx-auto text-[color:var(--color-ink-muted)] text-lg">
-        {intro}
+  <script
+    type="application/ld+json"
+    set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        { "@type": "ListItem", position: 1, name: "Accueil", item: site.url },
+        { "@type": "ListItem", position: 2, name: "Réalisations", item: `${site.url}/realisations` },
+        { "@type": "ListItem", position: 3, name: resolvedTitle, item: `${site.url}/${slug}` },
+      ],
+    })}
+  />
+  <section class={`relative overflow-hidden ${color.bg} ${color.text}`}>
+    <!-- Decorative shapes — same vibe as home prestation cards -->
+    <span aria-hidden="true" class={`pointer-events-none absolute -right-20 -top-20 w-72 h-72 rounded-full ${color.shape}`}></span>
+    <span aria-hidden="true" class={`pointer-events-none absolute -left-24 bottom-[-6rem] w-64 h-64 rounded-full ${color.shape}`}></span>
+    <span aria-hidden="true" class={`pointer-events-none absolute right-[12%] bottom-4 w-16 h-16 rounded-full ${color.shapeAlt}`}></span>
+    <span aria-hidden="true" class={`pointer-events-none absolute left-[18%] top-6 w-10 h-10 rounded-full ${color.shapeAlt}`}></span>
+
+    <div class="container-x py-16 md:py-20 text-center relative">
+      <p class={`font-display uppercase tracking-[0.12em] text-xs md:text-sm font-semibold ${color.eyebrow}`} style="font-family:var(--font-display)">
+        {eyebrow}
       </p>
-    )}
+      <h1 class={`font-display uppercase tracking-[0.04em] mt-4 text-3xl md:text-5xl font-extrabold ${color.title}`} style="font-family:var(--font-display)">
+        {resolvedTitle}
+      </h1>
+      {intro && (
+        <p class={`mt-5 max-w-2xl mx-auto text-lg leading-relaxed ${color.intro}`}>
+          {intro}
+        </p>
+      )}
+    </div>
   </section>
 
   <section class="container-x pb-10">
@@ -42,8 +78,9 @@ const resolvedDescription =
         Études de cas en cours de mise en ligne.
       </p>
     )}
-    {list.map((c) => <CaseStudy data={c} />)}
+    {list.map((c, i) => <CaseStudy data={c} index={i} />)}
   </section>
 
   <ContactForm />
+  <Lightbox />
 </BaseLayout>

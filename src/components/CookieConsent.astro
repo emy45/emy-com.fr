@@ -1,0 +1,53 @@
+---
+// Tarteaucitron — CNIL-conformant cookie consent banner.
+// Loaded only in production to avoid noise during dev.
+const isProd = import.meta.env.PROD;
+const gaId = "G-FHV1XWXWB9";
+---
+
+{isProd && (
+  <>
+    <script is:inline src="https://cdn.jsdelivr.net/npm/tarteaucitronjs@1.18.2/tarteaucitron.min.js"></script>
+    <script is:inline define:vars={{ gaId }}>
+      // Wait for Tarteaucitron to be available
+      (function initTac() {
+        if (typeof tarteaucitron === "undefined") {
+          return window.setTimeout(initTac, 50);
+        }
+
+        tarteaucitron.init({
+          privacyUrl: "/mentions-legales",
+          bodyPosition: "bottom",
+          hashtag: "#tarteaucitron",
+          cookieName: "tarteaucitron",
+          orientation: "middle",
+          groupServices: false,
+          serviceDefaultState: "wait",
+          showAlertSmall: false,
+          cookieslist: true,
+          closePopup: false,
+          showIcon: true,
+          iconPosition: "BottomLeft",
+          adblocker: false,
+          DenyAllCta: true,
+          AcceptAllCta: true,
+          highPrivacy: true,
+          handleBrowserDNTRequest: false,
+          removeCredit: false,
+          moreInfoLink: true,
+          useExternalCss: false,
+          useExternalJs: false,
+          readmoreLink: "/mentions-legales",
+          mandatory: true,
+          mandatoryCta: true,
+          googleConsentMode: true,
+        });
+
+        // Google Analytics 4
+        tarteaucitron.user.gtagUa = gaId;
+        tarteaucitron.user.gtagMore = function () {};
+        (tarteaucitron.job = tarteaucitron.job || []).push("gtag");
+      })();
+    </script>
+  </>
+)}

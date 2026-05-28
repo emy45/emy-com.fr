@@ -1,25 +1,32 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
-import Section from "@/components/Section.astro";
 import CategoryGrid from "@/components/CategoryGrid.astro";
 import ContactForm from "@/components/ContactForm.astro";
 ---
 
 <BaseLayout
-  title="Mes réalisations — Agence de communication cré'active"
-  description="Découvrez quelques-unes de mes réalisations Print et Web dans différents domaines d'activité : chartes, affichage, plaquettes, sites web, signalétique, édition, objets publicitaires."
+  title="Mes réalisations print & web"
+  description="Portfolio Emy Communication : chartes graphiques, affichage, plaquettes, sites web, signalétique, édition. Projets sur-mesure à Orléans."
 >
-  <section class="container-x py-16 md:py-20 text-center">
-    <p class="title-eyebrow">Portfolio</p>
-    <h1 class="title-section mt-3 !text-3xl md:!text-4xl">Quelques réalisations</h1>
-    <p class="mt-5 max-w-2xl mx-auto text-[color:var(--color-ink-muted)] text-lg">
-      Découvrez quelques-unes de mes réalisations Print et Web dans différents domaines
-      d'activité.
-    </p>
-  </section>
+  <section class="relative overflow-hidden bg-[#222831] text-white">
+    <!-- Decorative shapes -->
+    <span aria-hidden="true" class="pointer-events-none absolute -right-20 -top-20 w-72 h-72 rounded-full bg-white/8"></span>
+    <span aria-hidden="true" class="pointer-events-none absolute -left-24 bottom-[-6rem] w-64 h-64 rounded-full bg-white/8"></span>
+    <span aria-hidden="true" class="pointer-events-none absolute right-[12%] bottom-4 w-16 h-16 rounded-full bg-white/5"></span>
+    <span aria-hidden="true" class="pointer-events-none absolute left-[18%] top-6 w-10 h-10 rounded-full bg-white/5"></span>
 
-  <section class="container-x pb-20">
-    <CategoryGrid />
+    <div class="container-x py-20 md:py-24 text-center relative">
+      <h1 class="font-display uppercase tracking-[0.04em] text-3xl md:text-5xl font-extrabold text-[color:var(--color-brand)]" style="font-family:var(--font-display)">
+        Quelques réalisations
+      </h1>
+      <p class="mt-6 max-w-2xl mx-auto text-white/80 text-lg leading-relaxed">
+        Découvrez quelques-unes de mes réalisations Print et Web dans différents domaines
+        d'activité.
+      </p>
+    </div>
+    <div class="container-x pb-24">
+      <CategoryGrid />
+    </div>
   </section>
 
   <ContactForm
