@@ -99,7 +99,7 @@ export const POST: APIRoute = async ({ request }) => {
         <p style="margin: 0; white-space: pre-wrap; line-height: 1.6;">${escapeHtml(message)}</p>
       </div>
       <p style="margin-top: 24px; font-size: 13px; color: #999;">
-        Pour répondre, écris à <a href="mailto:${escapeHtml(email)}" style="color: #00a9b8;"><strong>${escapeHtml(email)}</strong></a>.
+        Tu peux répondre directement à cet email — la réponse partira vers <strong>${escapeHtml(email)}</strong>.
       </p>
     </div>
   `;
@@ -114,6 +114,7 @@ export const POST: APIRoute = async ({ request }) => {
       body: JSON.stringify({
         from: FROM,
         to: TO,
+        replyTo: email,
         subject,
         text,
         html,

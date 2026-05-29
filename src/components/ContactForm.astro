@@ -155,10 +155,14 @@ const sum = a + b;
         return;
       }
       try {
+        // Envoi en JSON (et non en FormData) : les requêtes application/json
+        // ne sont pas soumises à la protection CSRF checkOrigin d'Astro, qui
+        // renvoie un 403 derrière le reverse-proxy de Coolify (mismatch http/https).
+        const payload = Object.fromEntries(fd.entries());
         const res = await fetch(form.action, {
           method: "POST",
-          body: fd,
-          headers: { Accept: "application/json" },
+          body: JSON.stringify(payload),
+          headers: { "Content-Type": "application/json", Accept: "application/json" },
         });
         if (res.ok) {
           status.textContent = "Bienvenue dans l'Émy'sphère ! Votre message est bien arrivé — je reviens vers vous sous 48 h.";

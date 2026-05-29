@@ -12,6 +12,8 @@ interface Props {
   ogImage?: string;
   noindex?: boolean;
   preloadImage?: string;
+  /** Polices (chemins /fonts/*.woff2) à précharger pour cette page — réservé aux polices visibles above-the-fold. */
+  preloadFonts?: string[];
 }
 
 const {
@@ -20,6 +22,7 @@ const {
   ogImage = "/og-image.jpg",
   noindex = false,
   preloadImage,
+  preloadFonts = [],
 } = Astro.props;
 
 const canonical = new URL(Astro.url.pathname, Astro.site ?? site.url).toString();
@@ -66,10 +69,11 @@ const fullTitle = title === site.siteName ? title : `${title} | ${site.siteName}
       <link rel="preload" as="image" href={preloadImage} fetchpriority="high" />
     )}
 
-    <!-- Polices auto-hébergées (cf. src/styles/fonts.css) — préchargement des polices critiques du hero -->
-    <link rel="preload" as="font" type="font/woff2" href="/fonts/montserrat-700-latin.woff2" crossorigin />
-    <link rel="preload" as="font" type="font/woff2" href="/fonts/open-sans-400-latin.woff2" crossorigin />
-    <link rel="preload" as="font" type="font/woff2" href="/fonts/allura-400-latin.woff2" crossorigin />
+    <!-- Polices auto-hébergées (cf. src/styles/fonts.css). Préchargement ciblé par page
+         via la prop preloadFonts (uniquement les polices visibles above-the-fold). -->
+    {preloadFonts.map((href) => (
+      <link rel="preload" as="font" type="font/woff2" href={href} crossorigin />
+    ))}
 
     <script
       type="application/ld+json"
