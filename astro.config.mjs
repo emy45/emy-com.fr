@@ -1,15 +1,13 @@
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
-import vercel from '@astrojs/vercel';
-import tailwindcss from '@tailwindcss/vite';
+import node from '@astrojs/node';
 
 export default defineConfig({
   site: 'https://www.emy-com.fr',
   trailingSlash: 'never',
   output: 'static',
-  adapter: vercel({
-    imageService: true,
-    webAnalytics: { enabled: false },
+  adapter: node({
+    mode: 'standalone',
   }),
   integrations: [
     sitemap({
@@ -18,9 +16,6 @@ export default defineConfig({
       lastmod: new Date(),
     }),
   ],
-  vite: {
-    plugins: [tailwindcss()],
-  },
   image: {
     domains: [],
   },
