@@ -1,10 +1,11 @@
 import type { APIRoute } from "astro";
-import { Resend } from "resend";
 
 export const prerender = false;
 
 const TO = "emy@emy-com.fr";
-const FROM = import.meta.env.CONTACT_FROM || "Emy Communication <onboarding@resend.dev>";
+// Le domaine du FROM doit être dans les allowedDomains du token mail.mlanglois.fr
+// ET vérifié dans SES (DKIM). Surchargeable via la variable d'env CONTACT_FROM.
+const FROM = process.env.CONTACT_FROM || "Emy Communication <contact@emy-com.fr>";
 
 export const POST: APIRoute = async ({ request }) => {
   let payload: Record<string, FormDataEntryValue | string> = {};
@@ -58,17 +59,17 @@ export const POST: APIRoute = async ({ request }) => {
     );
   }
 
-  // === Envoi du message via Resend ===
-  const apiKey = import.meta.env.RESEND_API_KEY;
-  if (!apiKey) {
-    console.error("[contact-form] RESEND_API_KEY manquant dans les variables d'environnement");
+  // === Envoi du message via l'API mail.mlanglois.fr (Amazon SES) ===
+  const mailUrl = process.env.MAIL_MLGS_URL;
+  const mailToken = process.env.MAIL_MLGS_TOKEN;
+  if (!mailUrl || !mailToken) {
+    console.error("[contact-form] MAIL_MLGS_URL ou MAIL_MLGS_TOKEN manquant dans les variables d'environnement");
     return new Response(
       JSON.stringify({ ok: false, error: "config_missing" }),
       { status: 500, headers: { "content-type": "application/json" } }
     );
   }
 
-  const resend = new Resend(apiKey);
   const subject = `Nouveau message via emy-com.fr — ${name}${company ? " (" + company + ")" : ""}`;
   const text = [
     `Nouveau message reçu via le formulaire de contact emy-com.fr`,
@@ -98,23 +99,30 @@ export const POST: APIRoute = async ({ request }) => {
         <p style="margin: 0; white-space: pre-wrap; line-height: 1.6;">${escapeHtml(message)}</p>
       </div>
       <p style="margin-top: 24px; font-size: 13px; color: #999;">
-        Tu peux répondre directement à cet email — la réponse partira vers <strong>${escapeHtml(email)}</strong>.
+        Pour répondre, écris à <a href="mailto:${escapeHtml(email)}" style="color: #00a9b8;"><strong>${escapeHtml(email)}</strong></a>.
       </p>
     </div>
   `;
 
   try {
-    const { error } = await resend.emails.send({
-      from: FROM,
-      to: TO,
-      replyTo: email,
-      subject,
-      text,
-      html,
+    const res = await fetch(`${mailUrl}/api/send`, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${mailToken}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        from: FROM,
+        to: TO,
+        subject,
+        text,
+        html,
+      }),
     });
 
-    if (error) {
-      console.error("[contact-form] Resend error:", error);
+    if (!res.ok) {
+      const errBody = await res.json().catch(() => ({}));
+      console.error(`[contact-form] mail.mlanglois.fr error (${res.status}):`, errBody);
       return new Response(
         JSON.stringify({ ok: false, error: "send_failed" }),
         { status: 502, headers: { "content-type": "application/json" } }
